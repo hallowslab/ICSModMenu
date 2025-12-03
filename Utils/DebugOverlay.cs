@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace MyInternetCafeMod.Utils
+namespace ICSModMenu.Utils
 {
     public class DebugOverlay : MonoBehaviour
     {

@@ -1,0 +1,95 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework> <!-- seems best for these type of projects -->
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <!-- Import game folder paths -->
+  <Import Project="GamePath.props" />
+
+  <ItemGroup>
+    <!-- References -->
+    <Reference Include="BepInEx">
+      <HintPath>$(GameRoot)\BepInEx\core\BepInEx.dll</HintPath>
+      <!-- Prevents the referenced DLL from being copied to the output folder -->
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>$(ManagedDir)\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine">
+      <HintPath>$(ManagedDir)\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(ManagedDir)\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(ManagedDir)\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Package reference for Harmony -->
+    <PackageReference Include="Lib.Harmony" Version="2.4.2">
+      <!-- Prevents the package DLL from being copied to the output folder -->
+      <PrivateAssets>all</PrivateAssets>
+      <!-- Only include the package for compilation; exclude runtime/content files -->
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>none</DebugType> <!-- Disables PDB generation -->
+    <Optimize>true</Optimize>   <!-- Enable optimizations for release -->
+  </PropertyGroup>
+
+  <Target Name="PostBuildRelease" AfterTargets="Build" Condition="'$(Configuration)'=='Release'">
+    <!-- Ensure Plugins folder exists -->
+    <MakeDir Directories="$(GameRoot)\BepInEx\plugins" Condition="!Exists('$(GamePath)\BepInEx\plugins')" />
+
+    <!-- Copy the compiled DLL -->
+    <Copy
+      SourceFiles="$(TargetPath)"
+      DestinationFolder="$(GameRoot)\BepInEx\plugins"
+      OverwriteReadOnlyFiles="true" />
+  </Target>
+
+  <Target Name="PostBuildDebug" AfterTargets="Build" Condition="'$(Configuration)'=='Debug'">
+    <!-- Ensure Plugins folder exists -->
+    <MakeDir Directories="$(GameRoot)\BepInEx\plugins" Condition="!Exists('$(GameRoot)\BepInEx\plugins')" />
+
+    <!-- Copy the compiled DLL -->
+    <Copy
+      SourceFiles="$(TargetPath)"
+      DestinationFolder="$(GameRoot)\BepInEx\plugins"
+      OverwriteReadOnlyFiles="true" />
+
+    <!-- Copy the PDB -->
+    <Copy
+      SourceFiles="$(TargetDir)$(TargetName).pdb"
+      DestinationFolder="$(GameRoot)\BepInEx\plugins"
+      Condition="Exists('$(TargetDir)$(TargetName).pdb')"
+      OverwriteReadOnlyFiles="true" />
+  </Target>
+
+</Project>

@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace MyInternetCafeMod.Patches
+namespace ICSModMenu.Patches
 {
     [HarmonyPatch(typeof(Civil))]
     public static class CivilPatch
