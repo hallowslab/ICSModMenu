@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <GameRoot>C:\SteamLibrary\steamapps\common\Internet Cafe Simulator\windows_content</GameRoot>
+    <ManagedDir>$(GameRoot)\Internet Cafe Simulator_Data\Managed</ManagedDir>
+  </PropertyGroup>
+</Project>
