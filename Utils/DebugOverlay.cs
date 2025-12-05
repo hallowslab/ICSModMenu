@@ -29,10 +29,17 @@ namespace ICSModMenu.Utils
             }
         }
 
+        // Clear all lines
+        public static void Clear()
+        {
+            var inst = Instance;
+            inst._lines.Clear();
+        }
+
         // Public logging
         public static void Log(string message)
         {
-            var inst = Instance; // ensures instance exists
+            var inst = Instance;
             if (inst._lines.Count >= maxLines)
                 inst._lines.RemoveAt(0);
 
