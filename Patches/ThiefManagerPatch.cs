@@ -1,6 +1,4 @@
-using ICSModMenu.Utils;
-
-namespace ICSModMenu.Features
+namespace ICSModMenu.Patches
 {
     public static class ThiefManagerPatch
     {
