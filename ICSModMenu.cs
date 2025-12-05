@@ -1,10 +1,11 @@
 ﻿using BepInEx;
 using UnityEngine;
+using HarmonyLib;
+using System.Reflection;
+
 using ICSModMenu.Features;
 using ICSModMenu.Utils;
-
-// To explore
-// sendedNewCustomer
+using ICSModMenu.Patches;
 
 
 namespace ICSModMenu
@@ -15,19 +16,28 @@ namespace ICSModMenu
         private bool menuVisible = false;
         private string moneyToAddText = "1000"; // store input as string
         private float moneyToSet = 1000f;
+        // For hunger slider
+        private float hungerValue = 100f;
 
         // In game class references
         private TrashSystem trashSystem;
         private PlayerStats playerStats;
         private CivilManager civilManager;
-
-        // For hunger slider
-        private float hungerValue = 100f;
+        private Harmony HarmonyInstance;
+        public bool thiefPatchEnabled = false;
+        public bool beggarPatchEnabled = false;
 
         void Awake()
         {
             // Required to allow opening the overlay before the menu
             DebugOverlay.Log("");
+            // Global harmony instance, to allow patching and unpatching
+            HarmonyInstance = new Harmony("com.hallowslab.ICSModMenu");
+        }
+
+        void OnDestroy()
+        {
+            PatchToggle.UnpatchAll(HarmonyInstance);
         }
 
         void Update()
@@ -63,14 +73,17 @@ namespace ICSModMenu
             if (!menuVisible) return;
 
             // Mod Menu box
-            GUI.Box(new Rect(10, 10, 260, 320), "Mod Menu");
+            GUI.Box(new Rect(10, 10, 260, 360), "Mod Menu");
 
-            // Money feature
             // Money label
             GUI.Label(new Rect(20, 40, 80, 20), "Amount:");
             // Creat input with default value
             moneyToAddText = GUI.TextField(new Rect(100, 40, 100, 20), moneyToAddText);
 
+
+            // Logger.LogInfo($"playerStats={playerStats}, civilManager={civilManager}, trashSystem={trashSystem}");
+
+            // Money feature
             // Convert string to float safely
             if (!float.TryParse(moneyToAddText, out moneyToSet))
             {
@@ -86,7 +99,8 @@ namespace ICSModMenu
             if (playerStats == null)
             {
                 GUI.Label(new Rect(20, 100, 200, 20), "PlayerStats not available yet");
-            } else
+            }
+            else
             // Modify hunger feature
             {
                 // Hunger label and slider
@@ -105,12 +119,11 @@ namespace ICSModMenu
             if (civilManager == null)
             {
                 GUI.Label(new Rect(20, 120, 200, 20), "CivilManager not available yet");
-                DebugOverlay.Log("CivilManager not available yet");
             }
-            if (civilManager.readyToCustomerCivil.Count <= 0)
+            // We never seem to reach this statement?
+            else if (civilManager.readyToCustomerCivil.Count <= 0)
             {
                 GUI.Label(new Rect(20, 120, 200, 20), "No civilians available");
-                DebugOverlay.Log("No civilians available");
             }
             else
             {
@@ -123,14 +136,37 @@ namespace ICSModMenu
             // Clear trash feature
             if (trashSystem == null)
             {
-                GUI.Label(new Rect(20, 140, 220, 20), "TrashSystem not found");
+                GUI.Label(new Rect(20, 140, 220, 20), "TrashSystem not available yet");
             }
             else
             {
-                if (GUI.Button(new Rect(20, 200, 200, 30), "Clear All Trash"))
+                if (GUI.Button(new Rect(20, 220, 200, 30), "Clear All Trash"))
                 {
                     TrashFeatures.ClearAllTrash(trashSystem);
+                    DebugOverlay.Log("Cleared trash!");
                 }
+            }
+            if (GUI.Button(new Rect(20, 260, 200, 30), thiefPatchEnabled ? "Enable Thiefs" : "Disable Thief"))
+            {
+                PatchToggle.Toggle(
+                    harmony: HarmonyInstance,
+                    originalMethod: typeof(ThiefManager).GetMethod("SendMyThief", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
+                    patchMethod: typeof(ThiefManagerPatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic),
+                    patchType: PatchType.Prefix,
+                    isEnabled: ref thiefPatchEnabled,
+                    this.Logger
+                );
+            }
+            if (GUI.Button(new Rect(20, 300, 200, 30), beggarPatchEnabled ? "Enable Beggars" : "Disable Beggars"))
+            {
+                PatchToggle.Toggle(
+                    harmony: HarmonyInstance,
+                    originalMethod: typeof(BeggarManager).GetMethod("SendMyBeggar", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
+                    patchMethod: typeof(BeggarManagerPatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic),
+                    patchType: PatchType.Prefix,
+                    isEnabled: ref beggarPatchEnabled,
+                    logger: this.Logger
+                );
             }
         }
     }
