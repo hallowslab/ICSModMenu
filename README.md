@@ -19,7 +19,7 @@
 - **Add Money Tool** – Enter any amount and instantly add it to your wallet.
 - **Clear Trash Tool** - Clears all trash in the cafe.
 
-## Patches
+### Patches
 
 - **Enable/Disable Thiefs** - Prevents Thiefs from being sent to the store (does not remove them from the game)
 - **Enable/Disable Beggars** - Prevents Beggars from being sent to the store (does not remove them from the game)
@@ -111,3 +111,4 @@ ICSModMenu/
 ## Support
 
 If you want improvements, more cheats, or UI enhancements, feel free to request them!
+
