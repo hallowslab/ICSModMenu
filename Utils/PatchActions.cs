@@ -9,8 +9,7 @@ namespace ICSModMenu.Utils
     {
         public static void ToggleThiefPatch(
             Harmony harmony,
-            ref bool enabledFlag,
-            ManualLogSource logger)
+            ref bool enabledFlag)
         {
             PatchToggle.Toggle(
                 harmony: harmony,
@@ -19,15 +18,13 @@ namespace ICSModMenu.Utils
                 patchMethod: typeof(ThiefManagerPatch).GetMethod("Prefix",
                     BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic),
                 patchType: PatchType.Prefix,
-                isEnabled: ref enabledFlag,
-                logger: logger
+                isEnabled: ref enabledFlag
             );
         }
 
         public static void ToggleBeggarPatch(
             Harmony harmony,
-            ref bool enabledFlag,
-            ManualLogSource logger)
+            ref bool enabledFlag)
         {
             PatchToggle.Toggle(
                 harmony: harmony,
@@ -36,8 +33,22 @@ namespace ICSModMenu.Utils
                 patchMethod: typeof(BeggarManagerPatch).GetMethod("Prefix",
                     BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic),
                 patchType: PatchType.Prefix,
-                isEnabled: ref enabledFlag,
-                logger: logger
+                isEnabled: ref enabledFlag
+            );
+        }
+
+        public static void TogglePlayerStatsPatch(
+            Harmony harmony,
+            ref bool enabledFlag)
+        {
+            PatchToggle.Toggle(
+                harmony,
+                originalMethod: typeof(PlayerStats).GetMethod("Update",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
+                patchMethod: typeof(PlayerStatsPatch).GetMethod("Prefix",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
+                patchType: PatchType.Prefix,
+                isEnabled: ref enabledFlag
             );
         }
     }

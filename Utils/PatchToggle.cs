@@ -22,29 +22,29 @@ namespace ICSModMenu.Utils
         /// <param name="patchMethod">Your patch method (static).</param>
         /// <param name="patchType">Prefix / Postfix / Transpiler / All</param>
         /// <param name="isEnabled">Reference to a boolean storing the toggle state.</param>
-        public static void Toggle(Harmony harmony, MethodInfo originalMethod, MethodInfo patchMethod, PatchType patchType, ref bool isEnabled, ManualLogSource logger)
+        public static void Toggle(Harmony harmony, MethodInfo originalMethod, MethodInfo patchMethod, PatchType patchType, ref bool isEnabled)
         {
             if (harmony == null)
             {
-                logger.LogError($"Missing main harmony instance: '{harmony}'");
+                ModMenuPlugin.Log.LogError($"Missing main harmony instance: '{harmony}'");
                 return;
             }
 
             if (originalMethod == null)
             {
-                logger.LogError($"Original game method not found: '{originalMethod.Name}'");
+                ModMenuPlugin.Log.LogError($"Original game method not found: '{originalMethod.Name}'");
                 return;
             }
 
             if (patchMethod == null)
             {
-                logger.LogError($"Patch method not found: '{patchMethod.Name}'");
+                ModMenuPlugin.Log.LogError($"Patch method not found: '{patchMethod.Name}'");
                 return; 
             }
 
             if (!patchMethod.IsStatic)
             {
-                logger.LogError($"Patch method '{patchMethod.Name}' must be static!");
+                ModMenuPlugin.Log.LogError($"Patch method '{patchMethod.Name}' must be static!");
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace ICSModMenu.Utils
                 harmony.Unpatch(originalMethod, patchMethod);
                 isEnabled = false;
                 DebugOverlay.Log($"Patch method '{patchMethod.Name}' disabled for '{originalMethod.Name}'");
-                logger.LogInfo($"Patch method '{patchMethod.Name}' disabled for '{originalMethod.Name}'");
+                ModMenuPlugin.Log.LogInfo($"Patch method '{patchMethod.Name}' disabled for '{originalMethod.Name}'");
                 return;
             }
 
@@ -82,7 +82,7 @@ namespace ICSModMenu.Utils
 
             isEnabled = true;
             DebugOverlay.Log($"Patch method '{patchMethod.Name}' enabled for '{originalMethod.Name}'");
-            logger.LogInfo($"Patch method '{patchMethod.Name}' enabled for '{originalMethod.Name}'");
+            ModMenuPlugin.Log.LogInfo($"Patch method '{patchMethod.Name}' enabled for '{originalMethod.Name}'");
         }
 
         /// <summary>
