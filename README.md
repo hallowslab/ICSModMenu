@@ -25,8 +25,8 @@
 
 ### Patches
 
-- **Enable/Disable Thiefs** - Prevents Thiefs from being sent to the store (does not remove them from the game)
-- **Enable/Disable Beggars** - Prevents Beggars from being sent to the store (does not remove them from the game)
+- **Enable/Disable Thiefs** - Prevents Thiefs from being sent to the store (does not remove them from the game).
+- **Enable/Disable Beggars** - Prevents Beggars from being sent to the store (does not remove them from the game).
 - **Enable/Disable Hunger** - Prevents Hunger from decreasing.
 
 ---
