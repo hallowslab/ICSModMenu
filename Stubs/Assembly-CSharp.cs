@@ -1,3 +1,4 @@
+#if CI
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -23,3 +24,4 @@ public class TrashSystem : MonoBehaviour
     public GameObject[] room1Trash;
     public GameObject[] room2Trash;
 }
+#endif
