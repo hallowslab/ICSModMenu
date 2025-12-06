@@ -16,6 +16,8 @@
 
   <!-- STUBS for CI/CD -->
   <PropertyGroup Condition="'$(CI)' == 'true'">
+    <!-- Disable default SDK compile items for CI builds -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <DefineConstants>CI</DefineConstants>
   </PropertyGroup>
 
