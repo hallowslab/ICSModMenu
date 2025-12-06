@@ -2,7 +2,7 @@ namespace ICSModMenu.Patches
 {
     public static class BeggarManagerPatch
     {
-        // Postfix runs after SendMyBeggar()
+        // Prefix runs before SendMyBeggar()
         public static bool Prefix(BeggarManager __instance)
         {
             return false;
