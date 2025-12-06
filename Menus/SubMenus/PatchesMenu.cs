@@ -1,15 +1,19 @@
 using UnityEngine;
 
-namespace ICSModMenu.Menus
+namespace ICSModMenu.Menus.SubMenus
 {
     public class PatchesMenu
     {
         private ModMenuPlugin plugin;
 
-        private static float menuWidth = 240f;
-        private static float buttonWidth = 200f;
-        private static float buttonHeight = 30f;
-        private float buttonX = (menuWidth - buttonWidth) / 2;
+        private static readonly float menuWidth = 240f;
+        private static readonly float menuHeight = 200f;
+        private static readonly float menuX = 10f;
+        private static readonly float menuY = 10f;
+        private static readonly float buttonWidth = 200f;
+        private static readonly float buttonHeight = 30f;
+        private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
+
 
         public PatchesMenu(ModMenuPlugin plugin)
         {
@@ -18,7 +22,7 @@ namespace ICSModMenu.Menus
 
         public void Draw()
         {
-            GUI.Box(new Rect(10, 10, menuWidth, 200), "Patch Menu");
+            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Patch Menu");
 
             //
             // Thief Patch Toggle
@@ -39,9 +43,18 @@ namespace ICSModMenu.Menus
             }
 
             //
+            // Hunger Patch Toggle
+            //
+            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight),
+                plugin.beggarPatchEnabled ? "Enable Hunger" : "Disable Hunger"))
+            {
+                plugin.ToggleBeggarPatch();
+            }
+
+            //
             // Back Button
             //
-            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Back"))
+            if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Back"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Main;
             }
