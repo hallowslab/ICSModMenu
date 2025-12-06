@@ -14,15 +14,22 @@
   <!-- Import game folder paths -->
   <Import Project="GamePath.props" Condition="Exists('GamePath.props')" />
 
-  <!-- STUBS for CI/CD -->
   <PropertyGroup Condition="'$(CI)' == 'true'">
     <!-- Disable default SDK compile items for CI builds -->
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <DefineConstants>CI</DefineConstants>
   </PropertyGroup>
 
+  <!-- Manually include files to check stubs contain proper definitions -->
   <ItemGroup Condition="'$(CI)' == 'true'">
+    <!-- STUBS for CI/CD -->
     <Compile Include="Stubs\**\*.cs" />
+
+    <Compile Include="Features\*.cs" />
+    <Compile Include="Patches\*.cs" />
+    <Compile Include="Utils\*.cs" />
+    <Compile Include="Menus\**\*.cs" />
+    <Compile Include="ICSModMenu.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists('GamePath.props') And '$(CI)' != 'true'">
@@ -76,7 +83,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType> <!-- Disables PDB generation -->
-    <Optimize>true</Optimize>   <!-- Enable optimizations for release -->
+    <Optimize>true</Optimize> <!-- Enable optimizations for release -->
   </PropertyGroup>
 
   <Target Name="PostBuildRelease" AfterTargets="Build" Condition="'$(Configuration)'=='Release' And '$(CI)' != 'true'">

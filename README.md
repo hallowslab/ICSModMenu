@@ -16,13 +16,18 @@
 
 ### Cheats
 
-- **Add Money Tool** – Enter any amount and instantly add it to your wallet.
-- **Clear Trash Tool** - Clears all trash in the cafe.
+- **Set Money** – Enter any amount and instantly add it to your wallet.
+- **Set Hunger** – Enter any amount and instantly add it to your wallet.
+- **Clear Trash** - Clears all trash in the cafe.
+- **Send New Customer** - Sends a customer to the store
+- **Add/Remove Chef** - Adds or removes the Chef
+- **Add/Remove Bodyguard** - Adds or removes the Bodyguard
 
 ### Patches
 
-- **Enable/Disable Thiefs** - Prevents Thiefs from being sent to the store (does not remove them from the game)
-- **Enable/Disable Beggars** - Prevents Beggars from being sent to the store (does not remove them from the game)
+- **Enable/Disable Thiefs** - Prevents Thiefs from being sent to the store (does not remove them from the game).
+- **Enable/Disable Beggars** - Prevents Beggars from being sent to the store (does not remove them from the game).
+- **Enable/Disable Hunger** - Prevents Hunger from decreasing.
 
 ---
 
@@ -83,6 +88,12 @@ Launch the game and press **F11** to open the menu.
    dotnet publish -c Release
    ```
 
+   3.1. If you want to test the stubs locally you need to run
+
+   ```cmd
+      dotnet build -c Debug /p:CI=true
+   ```
+
 The DLL will be generated inside the `publish` folder.
 
 ---
@@ -111,4 +122,3 @@ ICSModMenu/
 ## Support
 
 If you want improvements, more cheats, or UI enhancements, feel free to request them!
-

@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using ICSModMenu.Features;
 
 namespace ICSModMenu.Utils
@@ -37,8 +38,40 @@ namespace ICSModMenu.Utils
         {
             if (plugin.CivilManager == null) return;
 
-            CivilManagerUtils.SendNewCustomer(plugin.CivilManager);
+            CivilManagerFeatures.SendNewCustomer(plugin.CivilManager);
             DebugOverlay.Log("Sent customer");
+        }
+
+        public void AddBodyguard()
+        {
+            if (plugin.WorkersPanel == null) return;
+
+            WorkersPanelFeatures.AddBodyguard(plugin.WorkersPanel);
+            DebugOverlay.Log("Added bodyguard");
+        }
+
+        public void RemoveBodyguard()
+        {
+            if (plugin.WorkersPanel == null) return;
+
+            WorkersPanelFeatures.RemoveBodyguard(plugin.WorkersPanel);
+            DebugOverlay.Log("Removed bodyguard");
+        }
+
+        public void AddChef()
+        {
+            if (plugin.WorkersPanel == null) return;
+
+            WorkersPanelFeatures.AddChef(plugin.WorkersPanel);
+            DebugOverlay.Log("Added Chef");
+        }
+
+        public void RemoveChef()
+        {
+            if (plugin.WorkersPanel == null) return;
+
+            WorkersPanelFeatures.RemoveChef(plugin.WorkersPanel);
+            DebugOverlay.Log("Removed Chef");
         }
     }
 }
