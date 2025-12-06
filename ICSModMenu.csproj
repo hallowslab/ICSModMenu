@@ -21,10 +21,12 @@
   </PropertyGroup>
 
   <!-- STUBS for CI/CD -->
-  <ItemGroup Condition="'$(CI)' == 'true'">
+  <ItemGroup Condition="'$(UseStubs)' == 'true'">
     <Compile Include="Stubs\**\*.cs" />
+  </ItemGroup>
 
     <!-- Manually include files to check stubs contain proper definitions -->
+  <ItemGroup Condition="'$(CI)' == 'true'">
     <Compile Include="Features\*.cs" />
     <Compile Include="Patches\*.cs" />
     <Compile Include="Utils\*.cs" />
@@ -83,7 +85,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType> <!-- Disables PDB generation -->
-    <Optimize>true</Optimize>   <!-- Enable optimizations for release -->
+    <Optimize>true</Optimize> <!-- Enable optimizations for release -->
   </PropertyGroup>
 
   <Target Name="PostBuildRelease" AfterTargets="Build" Condition="'$(Configuration)'=='Release' And '$(CI)' != 'true'">
