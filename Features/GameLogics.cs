@@ -13,8 +13,6 @@ namespace ICSModMenu.Features
 
             // Since player prefs is always instantiated we can skip/check this when on main menu
             MoneyTaker.Instance?.GenerateMoneyTaker(amount);
-            // From UnityEngine
-            Debug.Log($"Money has been set to: {amount}$");
         }
     }
 }
