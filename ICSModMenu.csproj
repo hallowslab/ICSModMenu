@@ -26,9 +26,10 @@
     <Compile Include="Stubs\**\*.cs" />
 
     <Compile Include="Features\*.cs" />
+    <Compile Include="Menus\**\*.cs" />
+    <Compile Include="Models\**\*.cs" />
     <Compile Include="Patches\*.cs" />
     <Compile Include="Utils\*.cs" />
-    <Compile Include="Menus\**\*.cs" />
     <Compile Include="ICSModMenu.cs" />
   </ItemGroup>
 
