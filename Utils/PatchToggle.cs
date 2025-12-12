@@ -32,13 +32,13 @@ namespace ICSModMenu.Utils
 
             if (originalMethod == null)
             {
-                ModMenuPlugin.Log.LogError($"Original game method not found: '{originalMethod.Name}'");
+                ModMenuPlugin.Log.LogError($"Original game method not found");
                 return;
             }
 
             if (patchMethod == null)
             {
-                ModMenuPlugin.Log.LogError($"Patch method not found: '{patchMethod.Name}'");
+                ModMenuPlugin.Log.LogError($"Patch method not found");
                 return; 
             }
 
@@ -53,9 +53,12 @@ namespace ICSModMenu.Utils
                 // Remove *only this* patch method
                 harmony.Unpatch(originalMethod, patchMethod);
                 isEnabled = false;
+                #if DEBUG
                 DebugOverlay.Log($"Patch method '{patchMethod.Name}' disabled for '{originalMethod.Name}'");
                 ModMenuPlugin.Log.LogInfo($"Patch method '{patchMethod.Name}' disabled for '{originalMethod.Name}'");
+                #endif
                 return;
+
             }
 
             // Apply the requested patch type
@@ -81,8 +84,10 @@ namespace ICSModMenu.Utils
             }
 
             isEnabled = true;
+            #if DEBUG
             DebugOverlay.Log($"Patch method '{patchMethod.Name}' enabled for '{originalMethod.Name}'");
             ModMenuPlugin.Log.LogInfo($"Patch method '{patchMethod.Name}' enabled for '{originalMethod.Name}'");
+            #endif
         }
 
         /// <summary>
