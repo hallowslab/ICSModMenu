@@ -95,7 +95,11 @@ namespace ICSModMenu
             );
         }
 
-        void Awake()
+        #if CI
+        private new void Awake()
+        #else
+        private void Awake()
+        #endif
         {
             // Required to allow opening the overlay before the menu
             DebugOverlay.Log("");
@@ -129,7 +133,11 @@ namespace ICSModMenu
             }
         }
 
-        void Update()
+        #if CI
+        private new void Update()
+        #else
+        private void Update()
+        #endif
         {
             // TODO: This is not working
             if (LoadingHelper.IsLoading())
@@ -163,7 +171,11 @@ namespace ICSModMenu
             }
         }
 
-        void OnGUI()
+        #if CI
+        private new void OnGUI()
+        #else
+        private void OnGUI()
+        #endif
         {
             if (!menuVisible) return;
 
