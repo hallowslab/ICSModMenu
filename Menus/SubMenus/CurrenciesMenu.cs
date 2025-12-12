@@ -1,18 +1,21 @@
+using System;
 using UnityEngine;
 
 using ICSModMenu.Features;
 using ICSModMenu.Utils;
+using ICSModMenu.Models;
 
 namespace ICSModMenu.Menus.SubMenus
 {
-    public class PlayerStatsMenu
+    public class CurrenciesMenu
     {
         private ModMenuPlugin plugin;
 
-        private float hungerValue = 100f;
+        private string moneyText = "1000";
+        private float moneyValue = 1000f;
 
         private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 160f;
+        private static readonly float menuHeight = 220f;
         private static readonly float menuX = 10f;
         private static readonly float menuY = 10f;
         private static readonly float buttonWidth = 200f;
@@ -20,17 +23,14 @@ namespace ICSModMenu.Menus.SubMenus
         private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
 
 
-        public PlayerStatsMenu(ModMenuPlugin plugin)
+        public CurrenciesMenu(ModMenuPlugin plugin)
         {
             this.plugin = plugin;
-            // Initialize hunger slider from player stats if available
-            if (plugin.PlayerStats != null)
-                hungerValue = plugin.PlayerStats.hungry;
         }
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Player stats Menu");
+            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Currencies Menu");
             if (plugin.PlayerStats == null)
             {
                 GUI.Label(new Rect(buttonX, 40, buttonWidth, 60), "PlayerStats not available yet");
@@ -40,29 +40,32 @@ namespace ICSModMenu.Menus.SubMenus
             }
 
             //
-            // SET HUNGER SECTION
+            // SET MONEY SECTION
             //
-            GUI.Label(new Rect(30, 40, 100, 20), "Hunger:");
+            GUI.Label(new Rect(30, 40, 80, 20), "Amount:");
+            moneyText = GUI.TextField(new Rect(80, 40, 100, 20), moneyText);
 
-            hungerValue = GUI.HorizontalSlider(
-                new Rect(80, 115, 120, 20),
-                hungerValue,
-                0f,
-                100f
-            );
+            if (!float.TryParse(moneyText, out moneyValue))
+                moneyValue = 0f;
 
-            GUI.Label(new Rect(205, 40, 50, 20), $"{hungerValue:F0}");
-
-            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Set Hunger"))
+            if (GUI.Button(new Rect(buttonX, 70, buttonWidth, 30), "Set Money"))
             {
-                plugin.PlayerStats.hungry = hungerValue;
-                DebugOverlay.Log($"Hunger set to {hungerValue}");
+                GameLogic.SetMoney(moneyValue);
+                DebugOverlay.Log($"Money set to: {moneyValue}");
+            }
+
+            //
+            // SET CRYPTO SECTION
+            //
+            if (GUI.Button(new Rect(buttonX, 110, buttonWidth, buttonHeight), "Set Crypto"))
+            {
+                plugin.ActivePage = ModMenuPlugin.MenuPage.CryptoHoldingsMenu;
             }
 
             //
             // Back Button
             //
-            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Back"))
+            if (GUI.Button(new Rect(buttonX, 190, buttonWidth, buttonHeight), "Back"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
             }

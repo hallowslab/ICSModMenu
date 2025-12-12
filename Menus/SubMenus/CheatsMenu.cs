@@ -7,7 +7,7 @@ namespace ICSModMenu.Menus.SubMenus
         private ModMenuPlugin plugin;
 
         private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 220f;
+        private static readonly float menuHeight = 230f;
         private static readonly float menuX = 10f;
         private static readonly float menuY = 10f;
         private static readonly float buttonWidth = 180f;
@@ -34,9 +34,17 @@ namespace ICSModMenu.Menus.SubMenus
             }
 
             // 
+            // CURRENCIES SUBMENU SECTION
+            // 
+            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Currencies Menu"))
+            {
+                plugin.ActivePage = ModMenuPlugin.MenuPage.CurrenciesMenu;
+            }
+
+            // 
             // STORE SUBMENU SECTION
             // 
-            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Store Menu"))
+            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Store Menu"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.StoreMenu;
             }
@@ -44,7 +52,7 @@ namespace ICSModMenu.Menus.SubMenus
             // 
             // WORKERS SUBMENU SECTION
             // 
-            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Workers Menu"))
+            if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Workers Menu"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Workers;
             }

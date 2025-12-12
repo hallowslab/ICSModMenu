@@ -17,16 +17,18 @@
 ### Cheats
 
 - **Set Money** – Enter any amount and instantly add it to your wallet.
-- **Set Hunger** – Enter any amount and instantly add it to your wallet.
+- **Set Hunger** – Set the current hunger value.
+- **Set Crypto** – Enter any amount select the coin and it gets added to portfolio.
 - **Clear Trash** - Clears all trash in the cafe.
-- **Send New Customer** - Sends a customer to the store
+- **Send New Customer** - Sends a customer to the cafe
 - **Add/Remove Chef** - Adds or removes the Chef
 - **Add/Remove Bodyguard** - Adds or removes the Bodyguard
+- **Unlock all rooms** - Unlocks all room expansions for the cafe
 
 ### Patches
 
-- **Enable/Disable Thiefs** - Prevents Thiefs from being sent to the store (does not remove them from the game).
-- **Enable/Disable Beggars** - Prevents Beggars from being sent to the store (does not remove them from the game).
+- **Enable/Disable Thiefs** - Prevents Thiefs from being sent to the cafe (does not remove them from the game).
+- **Enable/Disable Beggars** - Prevents Beggars from being sent to the cafe (does not remove them from the game).
 - **Enable/Disable Hunger** - Prevents Hunger from decreasing.
 
 ---
@@ -95,6 +97,31 @@ Launch the game and press **F11** to open the menu.
    ```
 
 The DLL will be generated inside the `publish` folder.
+
+### Creating a release
+
+Since we can't include game's dlls releases must be compiled locally.
+
+1. Compile the assets, make sure CI and UseStubs is not set or set to false
+2. Create the structure like bepinex expects
+
+   ```cmd
+   # for release
+   dotnet build ICSModMenu.csproj -c Release -o build/release
+   New-Item -ItemType Directory -Force -Path .\BepInEx\plugins
+   Copy-Item .\build\release\*.dll .\BepInEx\plugins\
+   Compress-Archive -Path BepInEx ICSModMenu-Release.zip
+   Remove-Item -Path BepInEx -Recurse -Force
+   # for debug
+   dotnet build ICSModMenu.csproj -c Debug -o build/debug
+   New-Item -ItemType Directory -Force -Path .\BepInEx\plugins
+   Copy-Item .\build\debug\*.dll .\BepInEx\plugins\
+   Copy-Item .\build\debug\*.pdb .\BepInEx\plugins\
+   Compress-Archive -Path BepInEx ICSModMenu-Debug.zip
+   Remove-Item -Path BepInEx -Recurse -Force
+   ```
+
+3. Manually create a releases at a tag and upload artifacts
 
 ### TODOS/Issues
 

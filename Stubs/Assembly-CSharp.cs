@@ -66,6 +66,8 @@ public class TrashSystem: MonoBehaviour
     public GameObject[] room9Trash;
 }
 
+public class Exchange : MonoBehaviour { }
+
 public class PlayerStats : MonoBehaviour
 {
     public float hungry;

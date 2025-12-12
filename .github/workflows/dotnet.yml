@@ -2,14 +2,12 @@ name: CI-CD
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*.*.*"
   pull_request:
 
 jobs:
-  test-stubs:
+  build:
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -27,87 +25,5 @@ jobs:
       - name: Restore
         run: dotnet restore
 
-      # BUILD DEBUG
-      - name: Build Debug
+      - name: Compile against stubs
         run: dotnet build ICSModMenu.csproj -c Debug -o build/debug
-
-  build:
-    runs-on: ubuntu-latest
-    needs: test-stubs
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: "8.0.x"
-
-      - name: Restore
-        run: dotnet restore
-
-      # BUILD DEBUG
-      - name: Build Debug
-        run: dotnet build ICSModMenu.csproj -c Debug -o build/debug
-
-      - name: Create Debug BepInEx Package
-        run: |
-          mkdir -p BepInEx/plugins
-          cp build/debug/*.dll build/debug/*.pdb BepInEx/plugins/
-          zip -r ICSModMenu-Debug.zip BepInEx
-
-      - name: Upload Debug ZIP Artifact
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@v5
-        with:
-          name: ICSModMenu-Debug
-          path: ICSModMenu-Debug.zip
-
-      # BUILD RELEASE (ONLY ON TAGS)
-      - name: Build Release
-        if: startsWith(github.ref, 'refs/tags/')
-        run: dotnet build ICSModMenu.csproj -c Release -o build/release
-
-      - name: Create Release BepInEx Package
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          mkdir -p BepInEx/plugins
-          cp build/release/*.dll BepInEx/plugins/
-          zip -r ICSModMenu-Release.zip BepInEx
-
-      - name: Upload Release ZIP Artifact
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@v5
-        with:
-          name: ICSModMenu-Release
-          path: ICSModMenu-Release.zip
-
-  # CREATE GITHUB RELEASE
-  release:
-    runs-on: ubuntu-latest
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/')
-
-    steps:
-      - name: Download Debug ZIP
-        uses: actions/download-artifact@v6
-        with:
-          name: ICSModMenu-Debug
-          path: artifacts/
-
-      - name: Download Release ZIP
-        uses: actions/download-artifact@v6
-        with:
-          name: ICSModMenu-Release
-          path: artifacts/
-
-      - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          files: |
-            artifacts/ICSModMenu-Debug.zip
-            artifacts/ICSModMenu-Release.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
