@@ -1,5 +1,7 @@
 GamePath.props
 Export/
+BepInEx/
+*.zip
 
 # Build results
 [Dd]ebug/
