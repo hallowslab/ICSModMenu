@@ -9,12 +9,10 @@ namespace ICSModMenu.Menus.SubMenus
     {
         private ModMenuPlugin plugin;
 
-        private string moneyText = "1000";
-        private float moneyValue = 1000f;
         private float hungerValue = 100f;
 
         private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 200f;
+        private static readonly float menuHeight = 160f;
         private static readonly float menuX = 10f;
         private static readonly float menuY = 10f;
         private static readonly float buttonWidth = 200f;
@@ -42,24 +40,9 @@ namespace ICSModMenu.Menus.SubMenus
             }
 
             //
-            // SET MONEY SECTION
-            //
-            GUI.Label(new Rect(30, 40, 80, 20), "Amount:");
-            moneyText = GUI.TextField(new Rect(80, 40, 100, 20), moneyText);
-
-            if (!float.TryParse(moneyText, out moneyValue))
-                moneyValue = 0f;
-
-            if (GUI.Button(new Rect(buttonX, 70, buttonWidth, 30), "Set Money"))
-            {
-                GameLogic.SetMoney(moneyValue);
-                DebugOverlay.Log($"Money set to: {moneyValue}");
-            }
-
-            //
             // SET HUNGER SECTION
             //
-            GUI.Label(new Rect(30, 110, 100, 20), "Hunger:");
+            GUI.Label(new Rect(30, 40, 100, 20), "Hunger:");
 
             hungerValue = GUI.HorizontalSlider(
                 new Rect(80, 115, 120, 20),
@@ -68,9 +51,9 @@ namespace ICSModMenu.Menus.SubMenus
                 100f
             );
 
-            GUI.Label(new Rect(205, 110, 50, 20), $"{hungerValue:F0}");
+            GUI.Label(new Rect(205, 40, 50, 20), $"{hungerValue:F0}");
 
-            if (GUI.Button(new Rect(buttonX, 140, buttonWidth, buttonHeight), "Set Hunger"))
+            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Set Hunger"))
             {
                 plugin.PlayerStats.hungry = hungerValue;
                 DebugOverlay.Log($"Hunger set to {hungerValue}");
@@ -79,7 +62,7 @@ namespace ICSModMenu.Menus.SubMenus
             //
             // Back Button
             //
-            if (GUI.Button(new Rect(buttonX, 170, buttonWidth, buttonHeight), "Back"))
+            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Back"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
             }
