@@ -69,7 +69,7 @@ namespace ICSModMenu.Menus.SubMenus
             }
             else
             {
-                GUI.Label(new Rect(20, 120, 200, 20), "RoomManager not available yet");
+                GUI.Label(new Rect(20, 120, 200, 20), "Open icstore page in-game first");
             }
 
             //
