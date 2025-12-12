@@ -2,9 +2,10 @@ namespace ICSModMenu.Patches
 {
     public static class PlayerStatsPatch
     {
-        public static bool Prefix(PlayerStats __instance)
+        public static void Postfix(PlayerStats __instance)
         {
-            return false;
+            // Keep hunger full
+            __instance.hungry = 100f;
         }
     }
 }

@@ -46,9 +46,9 @@ namespace ICSModMenu.Menus.SubMenus
             // Hunger Patch Toggle
             //
             if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight),
-                plugin.beggarPatchEnabled ? "Enable Hunger" : "Disable Hunger"))
+                plugin.playerStatsPatchEnabled ? "Enable Hunger" : "Disable Hunger"))
             {
-                plugin.ToggleBeggarPatch();
+                plugin.TogglePlayerStatsPatch();
             }
 
             //

@@ -45,8 +45,8 @@ namespace ICSModMenu.Utils
                 harmony,
                 originalMethod: typeof(PlayerStats).GetMethod("Update",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
-                patchMethod: typeof(PlayerStatsPatch).GetMethod("Prefix",
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
+                patchMethod: typeof(PlayerStatsPatch).GetMethod("Postfix",
+                BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic),
                 patchType: PatchType.Prefix,
                 isEnabled: ref enabledFlag
             );
