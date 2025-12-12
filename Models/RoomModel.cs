@@ -24,6 +24,15 @@ namespace ICSModMenu.Models
             {
                 new RoomDefinition
                 {
+                    curButton = store.btn_Kitchen,
+                    nextButton = null,       // Kitchen has no next button
+                    dangerLock = store.kitchenLock,
+                    Tick = store.tickKitchen,
+                    nextLock = null,         // No next lock
+                    PrefsKey = "buykitchen"
+                },
+                new RoomDefinition
+                {
                     curButton = store.btn_firstLock,
                     nextButton = store.btn_secondLock,
                     dangerLock = store.firstLock,
