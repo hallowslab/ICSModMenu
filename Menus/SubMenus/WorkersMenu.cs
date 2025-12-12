@@ -1,3 +1,5 @@
+using ICSModMenu.Features;
+using ICSModMenu.Utils;
 using UnityEngine;
 
 namespace ICSModMenu.Menus.SubMenus
@@ -34,16 +36,28 @@ namespace ICSModMenu.Menus.SubMenus
             }
 
             if (GUI.Button(new Rect(buttonX, 40, buttonWidth, buttonHeight), "Add Bodyguard"))
-                plugin.Actions.AddBodyguard();
+            {
+                WorkersPanelFeatures.AddBodyguard(plugin.WorkersPanel);
+                DebugOverlay.Log("Added bodyguard");
+            }
 
             if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Remove Bodyguard"))
-                plugin.Actions.RemoveBodyguard();
+            {
+                WorkersPanelFeatures.RemoveBodyguard(plugin.WorkersPanel);
+                DebugOverlay.Log("Removed bodyguard");
+            }
 
             if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Add Chef"))
-                plugin.Actions.AddChef();
+            {
+                WorkersPanelFeatures.AddChef(plugin.WorkersPanel);
+                DebugOverlay.Log("Added Chef");
+            }
 
             if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Remove Chef"))
-                plugin.Actions.RemoveChef();
+            {
+                WorkersPanelFeatures.RemoveChef(plugin.WorkersPanel);
+                DebugOverlay.Log("Removed Chef");
+            }
 
             if (GUI.Button(new Rect(buttonX, 200, buttonWidth, buttonHeight), "Back"))
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
