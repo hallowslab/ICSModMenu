@@ -11,7 +11,7 @@ using ICSModMenu.Models;
 
 namespace ICSModMenu
 {
-    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.5.0")]
+    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.6.0")]
     public class ModMenuPlugin : BaseUnityPlugin
     {
         // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/3_logging.html
@@ -28,6 +28,7 @@ namespace ICSModMenu
         private CivilManager civilManager;
         private WorkersPanel workersPanel;
         private icstore icstore;
+        private Exchange exchange;
 
         // Public read-only exposure
         public PlayerStats PlayerStats => playerStats;
@@ -35,9 +36,8 @@ namespace ICSModMenu
         public CivilManager CivilManager => civilManager;
         public WorkersPanel WorkersPanel => workersPanel;
         public icstore ICStore => icstore;
+        public Exchange Exchange => exchange;
 
-        // Helpers for cheats
-        public GameActions Actions;
 
         private Harmony HarmonyInstance;
         // For tracking state
@@ -56,6 +56,8 @@ namespace ICSModMenu
             Patches,
             Workers,
             PlayerStatsMenu,
+            CurrenciesMenu,
+            CryptoHoldingsMenu,
             StoreMenu,
         }
 
@@ -66,6 +68,8 @@ namespace ICSModMenu
         public PatchesMenu patchesMenu;
         public WorkersMenu workersMenu;
         public PlayerStatsMenu playerStatsMenu;
+        public CurrenciesMenu currenciesMenu;
+        public CryptoHoldingsMenu cryptoHoldingsMenu;
         public StoreMenu storeMenu;
 
         //  Forward calls for patches
@@ -107,9 +111,9 @@ namespace ICSModMenu
             patchesMenu = new PatchesMenu(this);
             workersMenu = new WorkersMenu(this);
             playerStatsMenu = new PlayerStatsMenu(this);
+            currenciesMenu = new CurrenciesMenu(this);
+            cryptoHoldingsMenu = new CryptoHoldingsMenu(this);
             storeMenu = new StoreMenu(this);
-            // instantiate actions
-            Actions = new GameActions(this);
         }
 
         void OnDestroy()
@@ -138,6 +142,7 @@ namespace ICSModMenu
             Ensure(ref trashSystem);
             Ensure(ref workersPanel);
             Ensure(ref icstore);
+            Ensure(ref exchange);
             if (icstore != null && RoomManager == null)
             {
                 RoomManager = new RoomManager(icstore);
@@ -178,6 +183,12 @@ namespace ICSModMenu
                     break;
                 case MenuPage.PlayerStatsMenu:
                     playerStatsMenu.Draw();
+                    break;
+                case MenuPage.CurrenciesMenu:
+                    currenciesMenu.Draw();
+                    break;
+                case MenuPage.CryptoHoldingsMenu:
+                    cryptoHoldingsMenu.Draw();
                     break;
                 case MenuPage.StoreMenu:
                     storeMenu.Draw();
