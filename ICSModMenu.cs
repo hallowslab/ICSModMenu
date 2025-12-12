@@ -6,11 +6,12 @@ using HarmonyLib;
 using ICSModMenu.Utils;
 using ICSModMenu.Menus;
 using ICSModMenu.Menus.SubMenus;
+using ICSModMenu.Models;
 
 
 namespace ICSModMenu
 {
-    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.4.0")]
+    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.5.0")]
     public class ModMenuPlugin : BaseUnityPlugin
     {
         // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/3_logging.html
@@ -26,20 +27,25 @@ namespace ICSModMenu
         private PlayerStats playerStats;
         private CivilManager civilManager;
         private WorkersPanel workersPanel;
+        private icstore icstore;
 
         // Public read-only exposure
         public PlayerStats PlayerStats => playerStats;
         public TrashSystem TrashSystem => trashSystem;
         public CivilManager CivilManager => civilManager;
         public WorkersPanel WorkersPanel => workersPanel;
+        public icstore ICStore => icstore;
 
         // Helpers for cheats
         public GameActions Actions;
 
         private Harmony HarmonyInstance;
+        // For tracking state
         public bool thiefPatchEnabled = false;
         public bool beggarPatchEnabled = false;
         public bool playerStatsPatchEnabled = false;
+        // custom states
+        public RoomManager RoomManager { get; private set; }
 
         // Mod menu and submenus
         // Track which menu is currently active
@@ -48,7 +54,9 @@ namespace ICSModMenu
             Main,
             Cheats,
             Patches,
-            Workers
+            Workers,
+            PlayerStatsMenu,
+            StoreMenu,
         }
 
         // Public so menus can read/write it
@@ -57,6 +65,8 @@ namespace ICSModMenu
         public CheatsMenu cheatsMenu;
         public PatchesMenu patchesMenu;
         public WorkersMenu workersMenu;
+        public PlayerStatsMenu playerStatsMenu;
+        public StoreMenu storeMenu;
 
         //  Forward calls for patches
         public void ToggleThiefPatch()
@@ -96,6 +106,8 @@ namespace ICSModMenu
             cheatsMenu = new CheatsMenu(this);
             patchesMenu = new PatchesMenu(this);
             workersMenu = new WorkersMenu(this);
+            playerStatsMenu = new PlayerStatsMenu(this);
+            storeMenu = new StoreMenu(this);
             // instantiate actions
             Actions = new GameActions(this);
         }
@@ -103,6 +115,14 @@ namespace ICSModMenu
         void OnDestroy()
         {
             PatchToggle.UnpatchAll(HarmonyInstance);
+        }
+
+        private static void Ensure<T>(ref T field) where T : UnityEngine.Object
+        {
+            if (field == null)
+            {
+                field = Object.FindObjectOfType<T>();
+            }
         }
 
         void Update()
@@ -113,23 +133,28 @@ namespace ICSModMenu
                 DebugOverlay.Log("Functionality disabled while loading");
                 return; // disable hotkeys while loading
             }
-            if (playerStats == null)
+            Ensure(ref playerStats);
+            Ensure(ref civilManager);
+            Ensure(ref trashSystem);
+            Ensure(ref workersPanel);
+            Ensure(ref icstore);
+            if (icstore != null && RoomManager == null)
             {
-                playerStats = FindObjectOfType<PlayerStats>();
+                RoomManager = new RoomManager(icstore);
+                #if DEBUG
+                DebugOverlay.Log("RoomManager initialized");
+                Features.ICStoreFeatures.DumpRoomReferences(RoomManager, "startup");
+                #endif
             }
-            if (civilManager == null)
-                civilManager = FindObjectOfType<CivilManager>();
-            if (trashSystem == null)
-                trashSystem = FindObjectOfType<TrashSystem>();
-            if (workersPanel == null)
-                workersPanel = FindObjectOfType<WorkersPanel>();
             if (Input.GetKeyDown(KeyCode.F11))
             {
                 menuVisible = !menuVisible;
-                DebugOverlay.Log("Menu toggled");
                 // Toggle cursor
                 Cursor.visible = menuVisible; // show cursor when menu is open
                 Cursor.lockState = menuVisible ? CursorLockMode.None : CursorLockMode.Locked;
+                #if DEBUG
+                DebugOverlay.Log("Menu toggled");
+                #endif
             }
         }
 
@@ -150,6 +175,12 @@ namespace ICSModMenu
                     break;
                 case MenuPage.Workers:
                     workersMenu.Draw();
+                    break;
+                case MenuPage.PlayerStatsMenu:
+                    playerStatsMenu.Draw();
+                    break;
+                case MenuPage.StoreMenu:
+                    storeMenu.Draw();
                     break;
             }
         }
