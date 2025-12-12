@@ -36,7 +36,7 @@ namespace ICSModMenu.Menus.SubMenus
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Player stats Menu");
+            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Currencies Menu");
             if (plugin.PlayerStats == null)
             {
                 GUI.Label(new Rect(buttonX, 40, buttonWidth, 60), "PlayerStats not available yet");

@@ -22,7 +22,7 @@ namespace ICSModMenu.Menus.SubMenus
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Patch Menu");
+            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Patches Menu");
 
             //
             // Thief Patch Toggle
