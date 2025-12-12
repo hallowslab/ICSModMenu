@@ -13,12 +13,6 @@ namespace ICSModMenu.Menus.SubMenus
 
         private string moneyText = "1000";
         private float moneyValue = 1000f;
-        private string cryptoText = "100";
-        private float cryptoValue = 100f;
-        private CryptoType selectedCoin = CryptoType.BTC;
-        private readonly string[] cryptoNames = Enum.GetNames(typeof(CryptoType));
-
-
 
         private static readonly float menuWidth = 240f;
         private static readonly float menuHeight = 220f;
