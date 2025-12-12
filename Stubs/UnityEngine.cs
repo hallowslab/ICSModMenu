@@ -7,10 +7,9 @@ namespace UnityEngine
     // Base class for all Unity objects
     public class Object
     {
-        // Mimic Unity's FindObjectOfType
-        public static T FindObjectOfType<T>() where T : Object, new()
+        public static T FindObjectOfType<T>() where T : Object
         {
-            return new T();
+            return default(T);
         }
 
         public static void DontDestroyOnLoad(Object obj) { }
@@ -152,6 +151,7 @@ namespace UnityEngine.UI
     public class Button
     {
         public bool interactable { get; set; } = true;
+        public string name { get; set; } = "Button";
     }
 }
 #endif

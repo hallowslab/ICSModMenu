@@ -96,6 +96,12 @@ Launch the game and press **F11** to open the menu.
 
 The DLL will be generated inside the `publish` folder.
 
+### TODOS/Issues
+
+- UnlockAllRooms functionality can be broken if the mod is on that menu page while loading the game.
+   Seems like icstore gets instanced during loading, then removed and instanced again on opening the game's browser page
+- Unsure if SendNewCustomer is working as intended, needs further debugging
+
 ---
 
 ## Project Structure
