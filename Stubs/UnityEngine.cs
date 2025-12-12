@@ -111,7 +111,11 @@ namespace UnityEngine
         public static float HorizontalSlider(Rect rect, float value, float leftValue, float rightValue) => value;
         public static void Box(Rect rect, string text) { }
         public static string TextField(Rect rect, string text) => text;
-        // Add other GUI methods you need
+        
+        public static int SelectionGrid(Rect position, int selected, string[] texts, int xCount)
+        {
+            return selected;
+        }
     }
 
     public static class GUIStyle { }
