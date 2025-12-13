@@ -51,12 +51,12 @@ pipeline {
 
                 script {
                     def bepinexDir = 'build/BepInEx'
-                    sh '''
+                    sh """
                     rm -rf ${bepinexDir}
                     mkdir -p ${bepinexDir}/plugins
                     cp build/debug/*.dll build/debug/*.pdb BepInEx/plugins/
                     zip -r ICSModMenu-Debug.zip BepInEx
-                    '''
+                    """
                 }
             }
         }
@@ -70,12 +70,12 @@ pipeline {
 
                 script {
                     def bepinexDir = 'build/BepInEx'
-                    sh '''
+                    sh """
                     rm -rf ${bepinexDir}
                     mkdir -p ${bepinexDir}/plugins
                     cp build/release/*.dll BepInEx/plugins/
                     zip -r ICSModMenu-Release.zip BepInEx
-                    '''
+                    """
                 }
             }
         }
