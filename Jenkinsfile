@@ -30,6 +30,12 @@ pipeline {
             }
         }
 
+        stage('Prepare GamePath.props') {
+            steps {
+                sh 'cp "/opt/game-deps/Internet Cafe Simulator/GamePath.props" ./GamePath.props'
+            }
+        }
+
         stage('Restore') {
             steps {
                 dotnetRestore project: 'ICSModMenu.csproj', sdk: '8.0'
@@ -47,7 +53,7 @@ pipeline {
                 tag "v*"
             }
             steps {
-                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [OutputPath: 'build/debug'], sdk: '8.0'
+                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [CI: 'true', OutputPath: 'build/debug'], sdk: '8.0'
 
                 script {
                     def bepinexDir = './BepInEx'
@@ -66,7 +72,7 @@ pipeline {
                 tag "v*"
             }
             steps {
-                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', properties: [OutputPath: 'build/release'], sdk: '8.0'
+                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', properties: [CI: 'true', OutputPath: 'build/release'], sdk: '8.0'
 
                 script {
                     def bepinexDir = './BepInEx'
