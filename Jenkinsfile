@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        dotnetsdk 'DotNet-8.0'
+        dotnetsdk '8.0'
     }
 
     options {
@@ -49,13 +49,15 @@ pipeline {
             steps {
                 dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [OutputPath: 'build/debug'], sdk: '8.0'
 
-                def bepinexDir = 'build/BepInEx'
-                sh '''
-                rm -rf ${bepinexDir}
-                mkdir -p ${bepinexDir}/plugins
-                cp build/debug/*.dll build/debug/*.pdb BepInEx/plugins/
-                zip -r ICSModMenu-Debug.zip BepInEx
-                '''
+                script {
+                    def bepinexDir = 'build/BepInEx'
+                    sh '''
+                    rm -rf ${bepinexDir}
+                    mkdir -p ${bepinexDir}/plugins
+                    cp build/debug/*.dll build/debug/*.pdb BepInEx/plugins/
+                    zip -r ICSModMenu-Debug.zip BepInEx
+                    '''
+                }
             }
         }
 
@@ -66,13 +68,15 @@ pipeline {
             steps {
                 dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', properties: [OutputPath: 'build/release'], sdk: '8.0'
 
-                def bepinexDir = 'build/BepInEx'
-                sh '''
-                rm -rf ${bepinexDir}
-                mkdir -p ${bepinexDir}/plugins
-                cp build/release/*.dll BepInEx/plugins/
-                zip -r ICSModMenu-Release.zip BepInEx
-                '''
+                script {
+                    def bepinexDir = 'build/BepInEx'
+                    sh '''
+                    rm -rf ${bepinexDir}
+                    mkdir -p ${bepinexDir}/plugins
+                    cp build/release/*.dll BepInEx/plugins/
+                    zip -r ICSModMenu-Release.zip BepInEx
+                    '''
+                }
             }
         }
 
