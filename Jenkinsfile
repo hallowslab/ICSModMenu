@@ -50,11 +50,11 @@ pipeline {
                 dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [OutputPath: 'build/debug'], sdk: '8.0'
 
                 script {
-                    def bepinexDir = 'build/BepInEx'
+                    def bepinexDir = './BepInEx'
                     sh """
                     rm -rf ${bepinexDir}
                     mkdir -p ${bepinexDir}/plugins
-                    cp build/debug/*.dll build/debug/*.pdb BepInEx/plugins/
+                    cp build/debug/*.dll build/debug/*.pdb ${bepinexDir}/plugins/
                     zip -r ICSModMenu-Debug.zip BepInEx
                     """
                 }
@@ -69,11 +69,11 @@ pipeline {
                 dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', properties: [OutputPath: 'build/release'], sdk: '8.0'
 
                 script {
-                    def bepinexDir = 'build/BepInEx'
+                    def bepinexDir = './BepInEx'
                     sh """
                     rm -rf ${bepinexDir}
                     mkdir -p ${bepinexDir}/plugins
-                    cp build/release/*.dll BepInEx/plugins/
+                    cp build/release/*.dll ${bepinexDir}/plugins/
                     zip -r ICSModMenu-Release.zip BepInEx
                     """
                 }
