@@ -14,19 +14,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout scmGit(
-                    branches: [
-                        [name: '*/release/v*.*.*'], 
-                        [name: '*/v*.*.*']
-                    ],
-                    extensions: [],
-                    userRemoteConfigs: [
-                        [
-                            credentialsId: 'dbda54b3-5b5d-43e9-b8d6-8a78a9c7a194',
-                            url: 'https://github.com/hallowslab/ICSModMenu.git'
-                        ]
-                    ]
-                )
+                checkout scm
             }
         }
 
