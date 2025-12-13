@@ -5,13 +5,13 @@ namespace ICSModMenu.Features
 {
     public class WorkersPanelFeatures
     {
-        private static bool HasBodyguard(WorkersPanel workersPanel)
+        public static bool HasBodyguard(WorkersPanel workersPanel)
         {
             if (workersPanel.bodyguard.activeSelf == true) return true;
             return false;
         }
 
-        private static bool HasChef(WorkersPanel workersPanel)
+        public static bool HasChef(WorkersPanel workersPanel)
         {
             if (workersPanel.chef.activeSelf == true) return true;
             return false;

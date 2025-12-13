@@ -11,7 +11,7 @@ using ICSModMenu.Models;
 
 namespace ICSModMenu
 {
-    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.6.0")]
+    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.6.2")]
     public class ModMenuPlugin : BaseUnityPlugin
     {
         // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/3_logging.html
