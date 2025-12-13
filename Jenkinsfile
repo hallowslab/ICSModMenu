@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        dotnet 'DotNet-8.0'
+        dotnetsdk 'DotNet-8.0'
     }
 
     options {
@@ -47,7 +47,7 @@ pipeline {
                 tag "v*.*.*"
             }
             steps {
-                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', output: 'build/debug', sdk: '8.0'
+                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [OutputPath: 'build/debug'], sdk: '8.0'
 
                 def bepinexDir = 'build/BepInEx'
                 sh '''
@@ -64,7 +64,7 @@ pipeline {
                 tag "v*.*.*"
             }
             steps {
-                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', output: 'build/release', sdk: '8.0'
+                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', properties: [OutputPath: 'build/release'], sdk: '8.0'
 
                 def bepinexDir = 'build/BepInEx'
                 sh '''
