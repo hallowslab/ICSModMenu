@@ -44,7 +44,7 @@ pipeline {
 
         stage('Build Debug') {
             when {
-                tag "v*.*.*"
+                tag "v*"
             }
             steps {
                 dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [OutputPath: 'build/debug'], sdk: '8.0'
@@ -63,7 +63,7 @@ pipeline {
 
         stage('Build Release') {
             when {
-                tag "v*.*.*"
+                tag "v*"
             }
             steps {
                 dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', properties: [OutputPath: 'build/release'], sdk: '8.0'
@@ -82,7 +82,7 @@ pipeline {
 
         stage('Archive Artifacts') {
             when {
-                tag "v*.*.*"
+                tag "v*"
             }
             steps {
                 archiveArtifacts artifacts: 'ICSModMenu-Debug.zip'
