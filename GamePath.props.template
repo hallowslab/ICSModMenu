@@ -1,6 +1,17 @@
 <Project>
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT' And '$(CI)' != 'true'">
+    <GameRoot>C:/SteamLibrary/steamapps/common/Internet Cafe Simulator/windows_content</GameRoot>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT' And '$(CI)' != 'true'">
+    <GameRoot>/mount/SteamLibrary/steamapps/common/Internet Cafe Simulator/windows_content</GameRoot>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(CI)' == 'true'">
+    <GameRoot>/opt/game-deps/Internet Cafe Simulator/data/windows_content</GameRoot>
+  </PropertyGroup>
+
   <PropertyGroup>
-    <GameRoot>C:\SteamLibrary\steamapps\common\Internet Cafe Simulator\windows_content</GameRoot>
-    <ManagedDir>$(GameRoot)\Internet Cafe Simulator_Data\Managed</ManagedDir>
+    <ManagedDir>$(GameRoot)/Internet Cafe Simulator_Data/Managed</ManagedDir>
   </PropertyGroup>
 </Project>
