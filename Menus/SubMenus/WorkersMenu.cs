@@ -8,12 +8,13 @@ namespace ICSModMenu.Menus.SubMenus
     {
         private ModMenuPlugin plugin;
 
-        private const float menuWidth = 240f;
-        private const float menuX = 10f;
-        private const float menuY = 10f;
-        private const float menuHeight = 260f;
-        private const float buttonWidth = 180f;
-        private const float buttonHeight = 30f;
+        private static readonly float menuWidth = 240f;
+        private static readonly float menuHeight = 150f;
+        private static readonly float menuX = 10f;
+        private static readonly float menuY = 10f;
+        private static readonly float backButtonY = 120f;
+        private static readonly float buttonWidth = 180f;
+        private static readonly float buttonHeight = 30f;
         private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
 
 
@@ -30,36 +31,46 @@ namespace ICSModMenu.Menus.SubMenus
             if (plugin.WorkersPanel == null)
             {
                 GUI.Label(new Rect(20, 40, 200, 20), "Open Workers page in-game first");
-                if (GUI.Button(new Rect(buttonX, 200, buttonWidth, buttonHeight), "Back"))
+                if (GUI.Button(new Rect(buttonX, backButtonY, buttonWidth, buttonHeight), "Back"))
                     plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
                 return;
             }
 
-            if (GUI.Button(new Rect(buttonX, 40, buttonWidth, buttonHeight), "Add Bodyguard"))
+            bool hasBodyguard = WorkersPanelFeatures.HasBodyguard(plugin.WorkersPanel);
+            string bodyguardLabel = hasBodyguard ? "Remove Bodyguard" : "Add Bodyguard";
+
+            if (GUI.Button(new Rect(buttonX, 40, buttonWidth, buttonHeight), bodyguardLabel))
             {
-                WorkersPanelFeatures.AddBodyguard(plugin.WorkersPanel);
-                DebugOverlay.Log("Added bodyguard");
+                if (hasBodyguard)
+                {
+                    WorkersPanelFeatures.RemoveBodyguard(plugin.WorkersPanel);
+                    DebugOverlay.Log("Removed bodyguard");
+                }
+                else
+                {
+                    WorkersPanelFeatures.AddBodyguard(plugin.WorkersPanel);
+                    DebugOverlay.Log("Added bodyguard");
+                }
             }
 
-            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Remove Bodyguard"))
+            bool hasChef = WorkersPanelFeatures.HasChef(plugin.WorkersPanel);
+            string chefLabel = hasChef ? "Remove Chef" : "Add Chef";
+
+            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), chefLabel))
             {
-                WorkersPanelFeatures.RemoveBodyguard(plugin.WorkersPanel);
-                DebugOverlay.Log("Removed bodyguard");
+                if (hasChef)
+                {
+                    WorkersPanelFeatures.RemoveChef(plugin.WorkersPanel);
+                    DebugOverlay.Log("Removed Chef");
+                }
+                else
+                {
+                    WorkersPanelFeatures.AddChef(plugin.WorkersPanel);
+                    DebugOverlay.Log("Added Chef");
+                }
             }
 
-            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Add Chef"))
-            {
-                WorkersPanelFeatures.AddChef(plugin.WorkersPanel);
-                DebugOverlay.Log("Added Chef");
-            }
-
-            if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Remove Chef"))
-            {
-                WorkersPanelFeatures.RemoveChef(plugin.WorkersPanel);
-                DebugOverlay.Log("Removed Chef");
-            }
-
-            if (GUI.Button(new Rect(buttonX, 200, buttonWidth, buttonHeight), "Back"))
+            if (GUI.Button(new Rect(buttonX, backButtonY, buttonWidth, buttonHeight), "Back"))
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
         }
     }
