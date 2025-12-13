@@ -15,6 +15,7 @@ namespace ICSModMenu.Menus.SubMenus
         private static readonly float menuHeight = 160f;
         private static readonly float menuX = 10f;
         private static readonly float menuY = 10f;
+        private static readonly float backButtonY = 120f;
         private static readonly float buttonWidth = 200f;
         private static readonly float buttonHeight = 30f;
         private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
@@ -34,7 +35,7 @@ namespace ICSModMenu.Menus.SubMenus
             if (plugin.PlayerStats == null)
             {
                 GUI.Label(new Rect(buttonX, 40, buttonWidth, 60), "PlayerStats not available yet");
-                if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Back"))
+                if (GUI.Button(new Rect(buttonX, backButtonY, buttonWidth, buttonHeight), "Back"))
                     plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
                 return;
             }
@@ -45,7 +46,7 @@ namespace ICSModMenu.Menus.SubMenus
             GUI.Label(new Rect(30, 40, 100, 20), "Hunger:");
 
             hungerValue = GUI.HorizontalSlider(
-                new Rect(80, 115, 120, 20),
+                new Rect(80, 45, 120, 20),
                 hungerValue,
                 0f,
                 100f
@@ -62,7 +63,7 @@ namespace ICSModMenu.Menus.SubMenus
             //
             // Back Button
             //
-            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Back"))
+            if (GUI.Button(new Rect(buttonX, backButtonY, buttonWidth, buttonHeight), "Back"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
             }
