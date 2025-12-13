@@ -6,68 +6,48 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- Exclude all .cs files in Export/ from publish -->
-    <Compile Remove="Export\**" />
-  </ItemGroup>
-
   <!-- Import game folder paths -->
   <Import Project="GamePath.props" Condition="Exists('GamePath.props')" />
 
   <PropertyGroup Condition="'$(CI)' == 'true'">
-    <!-- Disable default SDK compile items for CI builds -->
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <DefineConstants>CI</DefineConstants>
   </PropertyGroup>
 
-  <!-- Manually include files to check stubs contain proper definitions -->
-  <ItemGroup Condition="'$(CI)' == 'true'">
-    <!-- STUBS for CI/CD -->
-    <Compile Include="Stubs\**\*.cs" />
-
-    <Compile Include="Features\*.cs" />
-    <Compile Include="Menus\**\*.cs" />
-    <Compile Include="Models\**\*.cs" />
-    <Compile Include="Patches\*.cs" />
-    <Compile Include="Utils\*.cs" />
-    <Compile Include="ICSModMenu.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('GamePath.props') And '$(CI)' != 'true'">
+  <ItemGroup Condition="Exists('GamePath.props')">
     <!-- References -->
     <Reference Include="BepInEx">
-      <HintPath>$(GameRoot)\BepInEx\core\BepInEx.dll</HintPath>
+      <HintPath>$(GameRoot)/BepInEx/core/BepInEx.dll</HintPath>
       <!-- Prevents the referenced DLL from being copied to the output folder -->
       <Private>False</Private>
     </Reference>
 
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(ManagedDir)/Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
 
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>$(ManagedDir)\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>$(ManagedDir)/Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
 
     <Reference Include="UnityEngine">
-      <HintPath>$(ManagedDir)\UnityEngine.dll</HintPath>
+      <HintPath>$(ManagedDir)/UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
 
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(ManagedDir)/UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
 
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>$(ManagedDir)\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>$(ManagedDir)/UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
 
     <Reference Include="UnityEngine.UI">
-      <HintPath>$(ManagedDir)\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(ManagedDir)/UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -89,20 +69,20 @@
 
   <Target Name="PostBuildRelease" AfterTargets="Build" Condition="'$(Configuration)'=='Release' And '$(CI)' != 'true'">
     <!-- Ensure Plugins folder exists -->
-    <MakeDir Directories="$(GameRoot)\BepInEx\plugins" Condition="!Exists('$(GameRoot)\BepInEx\plugins')" />
+    <MakeDir Directories="$(GameRoot)/BepInEx/plugins" Condition="!Exists('$(GameRoot)/BepInEx/plugins')" />
     <!-- Copy the compiled DLL -->
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)\BepInEx\plugins" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)/BepInEx/plugins" OverwriteReadOnlyFiles="true" />
   </Target>
 
   <Target Name="PostBuildDebug" AfterTargets="Build" Condition="'$(Configuration)'=='Debug' And '$(CI)' != 'true'">
     <!-- Ensure Plugins folder exists -->
-    <MakeDir Directories="$(GameRoot)\BepInEx\plugins" Condition="!Exists('$(GameRoot)\BepInEx\plugins')" />
+    <MakeDir Directories="$(GameRoot)/BepInEx/plugins" Condition="!Exists('$(GameRoot)/BepInEx/plugins')" />
     <!-- Copy the compiled DLL -->
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)\BepInEx\plugins" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)/BepInEx/plugins" OverwriteReadOnlyFiles="true" />
     <!-- Copy the PDB -->
     <Copy
       SourceFiles="$(TargetDir)$(TargetName).pdb"
-      DestinationFolder="$(GameRoot)\BepInEx\plugins"
+      DestinationFolder="$(GameRoot)/BepInEx/plugins"
       Condition="Exists('$(TargetDir)$(TargetName).pdb')"
       OverwriteReadOnlyFiles="true" />
   </Target>
