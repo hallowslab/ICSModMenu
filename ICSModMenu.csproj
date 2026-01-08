@@ -78,7 +78,7 @@
     <MakeDir Directories="$(GameRoot)/BepInEx/plugins/ICSModMenu" Condition="!Exists('$(GameRoot)/BepInEx/plugins/ICSModMenu')" />
     <!-- Copy the compiled DLL -->
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu" OverwriteReadOnlyFiles="true" />
-    <Copy SourceFiles="$(TargetDir)Newtonsoft.Json.dll" DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu" Condition="Exists('$(TargetDir)Newtonsoft.Json.dll')" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="$(TargetDir)/publish/Newtonsoft.Json.dll" DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu" Condition="Exists('$(TargetDir)/publish/Newtonsoft.Json.dll')" OverwriteReadOnlyFiles="true" />
   </Target>
 
   <Target Name="PostBuildDebug" AfterTargets="Build" Condition="'$(Configuration)'=='Debug' And '$(CI)' != 'true'">
