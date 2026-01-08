@@ -65,7 +65,7 @@ namespace ICSModMenu.Menus.SubMenus
             y += buttonHeight + 10f;
             if (GUI.Button(new Rect(buttonX, y, buttonWidth, buttonHeight), "Back"))
             {
-                plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
+                plugin.ActivePage = ModMenuPlugin.MenuPage.Main;
             }
         }
     }
