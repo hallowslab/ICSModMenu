@@ -1,8 +1,7 @@
 using System.Reflection;
 using UnityEngine;
+
 using ICSModMenu.Utils;
-using ICSModMenu.Models;
-using System.Collections.Generic;
 
 namespace ICSModMenu.Features
 {
