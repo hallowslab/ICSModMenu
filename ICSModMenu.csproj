@@ -50,6 +50,11 @@
       <HintPath>$(ManagedDir)/UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(ManagedDir)/UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
