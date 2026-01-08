@@ -25,6 +25,8 @@
 - **Add/Remove Chef** - Adds or removes the Chef
 - **Add/Remove Bodyguard** - Adds or removes the Bodyguard
 - **Unlock all rooms** - Unlocks all room expansions for the cafe
+- **Teleport to Coordinates** - Teleports to the coordinates specified in the inputs
+- **Save Current Pos as** - Saves the current coordinates (displayed in a list) so that they can be easily accessed
 
 ### Patches
 
@@ -63,10 +65,10 @@
 
 ### 2. Install the Mod
 
-Place `ICSModMenu.dll` into:
+Place all the files into:
 
 ```txt
-<Internet Cafe Simulator root>\BepInEx\plugins\ICSModMenu.dll
+<Internet Cafe Simulator root>\BepInEx\plugins\ICSModMenu\
 ```
 
 Launch the game and press **F11** to open the menu.
