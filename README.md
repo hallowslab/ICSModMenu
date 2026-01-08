@@ -13,20 +13,21 @@
 - **In‑game Mod Menu (F11)** – Toggle the mod UI at any time.
 - **In‑game Mod Menu (F10)** – Toggle the DebugOverlay UI.
 - **Modular Structure** – Clean separation of features, patches, menus and utilities.
-- **Future‑proof Architecture** – Designed to be easily expanded
+- **Future‑proof Architecture** – Designed to be easily expanded.
 
 ### Cheats
 
 - **Set Money** – Enter any amount and instantly add it to your wallet.
 - **Set Hunger** – Set the current hunger value.
 - **Set Crypto** – Enter any amount select the coin and it gets added to portfolio.
+- **Set Coin price** - Sets the value of the selected coin to the specified amount.
 - **Clear Trash** - Clears all trash in the cafe.
-- **Send New Customer** - Sends a customer to the cafe
-- **Add/Remove Chef** - Adds or removes the Chef
-- **Add/Remove Bodyguard** - Adds or removes the Bodyguard
-- **Unlock all rooms** - Unlocks all room expansions for the cafe
-- **Teleport to Coordinates** - Teleports to the coordinates specified in the inputs
-- **Save Current Pos as** - Saves the current coordinates (displayed in a list) so that they can be easily accessed
+- **Send New Customer** - Sends a customer to the cafe.
+- **Add/Remove Chef** - Adds or removes the Chef.
+- **Add/Remove Bodyguard** - Adds or removes the Bodyguard.
+- **Unlock all rooms** - Unlocks all room expansions for the cafe.
+- **Teleport to Coordinates** - Teleports to the coordinates specified in the inputs.
+- **Save Current Pos as** - Saves the current coordinates (displayed in a list) so that they can be easily accessed.
 
 ### Patches
 
