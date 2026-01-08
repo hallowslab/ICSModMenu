@@ -41,14 +41,14 @@ pipeline {
                 tag "v*"
             }
             steps {
-                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [CI: 'true', OutputPath: 'build/debug'], sdk: '8.0'
+                dotnetPublish project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [CI: 'true', OutputPath: 'build/debug'], sdk: '8.0'
 
                 script {
                     def bepinexDir = './BepInEx'
                     sh """
                     rm -rf ${bepinexDir}
-                    mkdir -p ${bepinexDir}/plugins
-                    cp build/debug/*.dll build/debug/*.pdb ${bepinexDir}/plugins/
+                    mkdir -p ${bepinexDir}/plugins/ICSModMenu
+                    cp build/debug/*.dll build/debug/*.pdb ${bepinexDir}/plugins/ICSModMenu
                     zip -r ICSModMenu-Debug.zip BepInEx
                     """
                 }
@@ -60,14 +60,14 @@ pipeline {
                 tag "v*"
             }
             steps {
-                dotnetBuild project: 'ICSModMenu.csproj', configuration: 'Release', properties: [CI: 'true', OutputPath: 'build/release'], sdk: '8.0'
+                dotnetPublish project: 'ICSModMenu.csproj', configuration: 'Release', properties: [CI: 'true', OutputPath: 'build/release'], sdk: '8.0'
 
                 script {
                     def bepinexDir = './BepInEx'
                     sh """
                     rm -rf ${bepinexDir}
-                    mkdir -p ${bepinexDir}/plugins
-                    cp build/release/*.dll ${bepinexDir}/plugins/
+                    mkdir -p ${bepinexDir}/plugins/ICSModMenu
+                    cp build/release/*.dll ${bepinexDir}/plugins/ICSModMenu
                     zip -r ICSModMenu-Release.zip BepInEx
                     """
                 }
