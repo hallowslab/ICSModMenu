@@ -65,6 +65,7 @@
       <!-- Only include the package for compilation; exclude runtime/content files -->
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -74,20 +75,22 @@
 
   <Target Name="PostBuildRelease" AfterTargets="Build" Condition="'$(Configuration)'=='Release' And '$(CI)' != 'true'">
     <!-- Ensure Plugins folder exists -->
-    <MakeDir Directories="$(GameRoot)/BepInEx/plugins" Condition="!Exists('$(GameRoot)/BepInEx/plugins')" />
+    <MakeDir Directories="$(GameRoot)/BepInEx/plugins/ICSModMenu" Condition="!Exists('$(GameRoot)/BepInEx/plugins/ICSModMenu')" />
     <!-- Copy the compiled DLL -->
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)/BepInEx/plugins" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="$(TargetDir)Newtonsoft.Json.dll" DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu" Condition="Exists('$(TargetDir)Newtonsoft.Json.dll')" OverwriteReadOnlyFiles="true" />
   </Target>
 
   <Target Name="PostBuildDebug" AfterTargets="Build" Condition="'$(Configuration)'=='Debug' And '$(CI)' != 'true'">
     <!-- Ensure Plugins folder exists -->
-    <MakeDir Directories="$(GameRoot)/BepInEx/plugins" Condition="!Exists('$(GameRoot)/BepInEx/plugins')" />
+    <MakeDir Directories="$(GameRoot)/BepInEx/plugins/ICSModMenu" Condition="!Exists('$(GameRoot)/BepInEx/plugins/ICSModMenu')" />
     <!-- Copy the compiled DLL -->
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)/BepInEx/plugins" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="$(TargetDir)/publish/Newtonsoft.Json.dll" DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu" Condition="Exists('$(TargetDir)/publish/Newtonsoft.Json.dll')" OverwriteReadOnlyFiles="true" />
     <!-- Copy the PDB -->
     <Copy
       SourceFiles="$(TargetDir)$(TargetName).pdb"
-      DestinationFolder="$(GameRoot)/BepInEx/plugins"
+      DestinationFolder="$(GameRoot)/BepInEx/plugins/ICSModMenu"
       Condition="Exists('$(TargetDir)$(TargetName).pdb')"
       OverwriteReadOnlyFiles="true" />
   </Target>
