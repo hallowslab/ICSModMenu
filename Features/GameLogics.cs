@@ -1,4 +1,5 @@
 using UnityEngine;
+
 using ICSModMenu.Models;
 
 namespace ICSModMenu.Features

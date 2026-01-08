@@ -1,6 +1,5 @@
 using HarmonyLib;
 using ICSModMenu.Patches;
-using BepInEx.Logging;
 using System.Reflection;
 
 namespace ICSModMenu.Utils

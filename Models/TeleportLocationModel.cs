@@ -1,19 +1,35 @@
+using UnityEngine;
+using System;
+
 namespace ICSModMenu.Models
 {
-    public class TeleportLocation
+    [Serializable]
+    public struct SerializableVector3
     {
-        public string Name { get; set; }
-        public UnityEngine.Vector3 Position { get; set; }
+        public float x, y, z;
 
-        public TeleportLocation(string name, UnityEngine.Vector3 position)
+        public SerializableVector3(Vector3 v)
         {
-            Name = name;
-            Position = position;
+            x = v.x;
+            y = v.y;
+            z = v.z;
         }
 
-        public override string ToString()
+        public Vector3 ToVector3() => new Vector3(x, y, z);
+    }
+
+    [Serializable]
+    public class TeleportLocation
+    {
+        public string Name;
+        public SerializableVector3 Position;
+
+        public TeleportLocation() { }
+
+        public TeleportLocation(string name, Vector3 position)
         {
-            return $"{Name} ({Position.x:F1}, {Position.y:F1}, {Position.z:F1})";
+            Name = name;
+            Position = new SerializableVector3(position);
         }
     }
 }

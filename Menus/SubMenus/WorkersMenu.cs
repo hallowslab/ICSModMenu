@@ -1,6 +1,7 @@
+using UnityEngine;
+
 using ICSModMenu.Features;
 using ICSModMenu.Utils;
-using UnityEngine;
 
 namespace ICSModMenu.Menus.SubMenus
 {

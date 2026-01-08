@@ -1,6 +1,6 @@
-using ICSModMenu.Models;
-using ICSModMenu.Utils;
 using UnityEngine;
+
+using ICSModMenu.Models;
 
 namespace ICSModMenu.Features
 {
