@@ -86,9 +86,10 @@ namespace ICSModMenu.Menus.SubMenus
             for (int i = 0; i < TeleportLocationManager.Locations.Count; i++)
             {
                 var loc = TeleportLocationManager.Locations[i];
-                if (GUI.Button(new Rect(0, i * 30, 200, 25), loc.ToString()))
+                if (GUI.Button(new Rect(0, i * 30, 200, 25), loc.Name))
                 {
-                    TeleportFeatures.Teleport(loc.Position);
+                    // Convert SerializableVector3 → Vector3
+                    TeleportFeatures.Teleport(loc.Position.ToVector3());
                 }
                 if (GUI.Button(new Rect(210, i * 30, 60, 25), "Delete"))
                 {

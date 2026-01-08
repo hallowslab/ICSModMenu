@@ -6,29 +6,6 @@ using System.Collections.Generic;
 
 namespace ICSModMenu.Features
 {
-    public static class TeleportLocationManager
-    {
-        private static readonly List<TeleportLocation> locations = new List<TeleportLocation>();
-
-        public static IReadOnlyList<TeleportLocation> Locations => locations;
-
-        public static void AddLocation(string name, Vector3 position)
-        {
-            locations.Add(new TeleportLocation(name, position));
-        }
-
-        public static void RemoveLocation(int index)
-        {
-            if (index >= 0 && index < locations.Count)
-                locations.RemoveAt(index);
-        }
-
-        public static void ClearLocations()
-        {
-            locations.Clear();
-        }
-    }
-
     public static class TeleportFeatures
     {
         /// <summary>
