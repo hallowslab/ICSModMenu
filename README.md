@@ -11,6 +11,7 @@
 ## Features
 
 - **In‑game Mod Menu (F11)** – Toggle the mod UI at any time.
+- **In‑game Mod Menu (F10)** – Toggle the DebugOverlay UI.
 - **Modular Structure** – Clean separation of features, patches, menus and utilities.
 - **Future‑proof Architecture** – Designed to be easily expanded
 
@@ -90,38 +91,7 @@ Launch the game and press **F11** to open the menu.
    dotnet publish -c Release
    ```
 
-   3.1. If you want to test the stubs locally you need to run
-
-   ```cmd
-      dotnet build -c Debug /p:CI=true
-   ```
-
 The DLL will be generated inside the `publish` folder.
-
-### Creating a release
-
-Since we can't include game's dlls releases must be compiled locally.
-
-1. Compile the assets, make sure CI and UseStubs is not set or set to false
-2. Create the structure like bepinex expects
-
-   ```cmd
-   # for release
-   dotnet build ICSModMenu.csproj -c Release -o build/release
-   New-Item -ItemType Directory -Force -Path .\BepInEx\plugins
-   Copy-Item .\build\release\*.dll .\BepInEx\plugins\
-   Compress-Archive -Path BepInEx ICSModMenu-Release.zip
-   Remove-Item -Path BepInEx -Recurse -Force
-   # for debug
-   dotnet build ICSModMenu.csproj -c Debug -o build/debug
-   New-Item -ItemType Directory -Force -Path .\BepInEx\plugins
-   Copy-Item .\build\debug\*.dll .\BepInEx\plugins\
-   Copy-Item .\build\debug\*.pdb .\BepInEx\plugins\
-   Compress-Archive -Path BepInEx ICSModMenu-Debug.zip
-   Remove-Item -Path BepInEx -Recurse -Force
-   ```
-
-3. Manually create a releases at a tag and upload artifacts
 
 ### TODOS/Issues
 
@@ -137,17 +107,18 @@ Since we can't include game's dlls releases must be compiled locally.
 ICSModMenu/
 ├── Features/           # Game logic and mod features
 ├── Menus/              # Menus and submenus
+├── Models/             # Template definitions
 ├── Patches/            # Harmony patches
 ├── Utils/              # Helper classes
 ├── GamePath.props      # Local path to the game installation
-└── ICSModMenu.cs    # Main BepInEx entrypoint
+└── ICSModMenu.cs       # Main BepInEx entrypoint
 ```
 
 ---
 
 ## Notes
 
-- This mod is does not modify game files.
+- This mod does not modify game files.
 - For debugging, a Debug build will also generate PDBs for dnSpy inspection.
 
 ---

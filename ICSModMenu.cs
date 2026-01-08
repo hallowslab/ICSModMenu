@@ -11,7 +11,7 @@ using ICSModMenu.Models;
 
 namespace ICSModMenu
 {
-    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.6.4")]
+    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.7.0")]
     public class ModMenuPlugin : BaseUnityPlugin
     {
         // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/3_logging.html
@@ -38,7 +38,6 @@ namespace ICSModMenu
         public icstore ICStore => icstore;
         public Exchange Exchange => exchange;
 
-
         private Harmony HarmonyInstance;
         // For tracking state
         public bool thiefPatchEnabled = false;
@@ -59,6 +58,7 @@ namespace ICSModMenu
             CurrenciesMenu,
             CryptoHoldingsMenu,
             StoreMenu,
+            TeleportMenu
         }
 
         // Public so menus can read/write it
@@ -71,6 +71,7 @@ namespace ICSModMenu
         public CurrenciesMenu currenciesMenu;
         public CryptoHoldingsMenu cryptoHoldingsMenu;
         public StoreMenu storeMenu;
+        public TeleportMenu teleportMenu;
 
         //  Forward calls for patches
         public void ToggleThiefPatch()
@@ -118,6 +119,7 @@ namespace ICSModMenu
             currenciesMenu = new CurrenciesMenu(this);
             cryptoHoldingsMenu = new CryptoHoldingsMenu(this);
             storeMenu = new StoreMenu(this);
+            teleportMenu = new TeleportMenu(this);
         }
 
         void OnDestroy()
@@ -204,6 +206,9 @@ namespace ICSModMenu
                     break;
                 case MenuPage.StoreMenu:
                     storeMenu.Draw();
+                    break;
+                case MenuPage.TeleportMenu:
+                    teleportMenu.Draw();
                     break;
             }
         }
