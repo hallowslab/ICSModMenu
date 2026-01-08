@@ -48,7 +48,7 @@ pipeline {
                     sh """
                     rm -rf ${bepinexDir}
                     mkdir -p ${bepinexDir}/plugins/ICSModMenu
-                    cp build/debug/*.dll build/debug/*.pdb ${bepinexDir}/plugins/ICSModMenu
+                    cp build/debugpublish/*.dll build/debug/*.pdb ${bepinexDir}/plugins/ICSModMenu
                     zip -r ICSModMenu-Debug.zip BepInEx
                     """
                 }
@@ -67,7 +67,7 @@ pipeline {
                     sh """
                     rm -rf ${bepinexDir}
                     mkdir -p ${bepinexDir}/plugins/ICSModMenu
-                    cp build/release/*.dll ${bepinexDir}/plugins/ICSModMenu
+                    cp build/releasepublish/*.dll ${bepinexDir}/plugins/ICSModMenu
                     zip -r ICSModMenu-Release.zip BepInEx
                     """
                 }
