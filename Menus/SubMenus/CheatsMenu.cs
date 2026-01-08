@@ -6,13 +6,13 @@ namespace ICSModMenu.Menus.SubMenus
     {
         private ModMenuPlugin plugin;
 
-        private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 230f;
+        private static readonly float menuWidth = 300f;
+        private static readonly float menuHeight = 300f;
         private static readonly float menuX = 10f;
         private static readonly float menuY = 10f;
-        private static readonly float buttonWidth = 180f;
-        private static readonly float buttonHeight = 30f;
-        // We probably won't be aligning buttons on this menu
+        private static readonly float buttonWidth = 220f;
+        private static readonly float buttonHeight = 34f;
+        // center horizontally
         private float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
 
 
@@ -25,44 +25,47 @@ namespace ICSModMenu.Menus.SubMenus
         {
             GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Cheats Menu");
 
-            // 
+            float y = 40f;
+
             // PLAYERSTATS SUBMENU SECTION
-            // 
-            if (GUI.Button(new Rect(buttonX, 40, buttonWidth, buttonHeight), "Player Stats Menu"))
+            if (GUI.Button(new Rect(buttonX, y, buttonWidth, buttonHeight), "Player Stats Menu"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.PlayerStatsMenu;
             }
 
-            // 
             // CURRENCIES SUBMENU SECTION
-            // 
-            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Currencies Menu"))
+            y += buttonHeight + 10f;
+            if (GUI.Button(new Rect(buttonX, y, buttonWidth, buttonHeight), "Currencies Menu"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.CurrenciesMenu;
             }
 
-            // 
             // STORE SUBMENU SECTION
-            // 
-            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Store Menu"))
+            y += buttonHeight + 10f;
+            if (GUI.Button(new Rect(buttonX, y, buttonWidth, buttonHeight), "Store Menu"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.StoreMenu;
             }
 
-            // 
             // WORKERS SUBMENU SECTION
-            // 
-            if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Workers Menu"))
+            y += buttonHeight + 10f;
+            if (GUI.Button(new Rect(buttonX, y, buttonWidth, buttonHeight), "Workers Menu"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Workers;
             }
 
-            //
-            // Back Button
-            //
-            if (GUI.Button(new Rect(buttonX, 200, buttonWidth, buttonHeight), "Back"))
+            // TELEPORT SUBMENU SECTION
+            y += buttonHeight + 10f;
+            if (GUI.Button(new Rect(buttonX, y, buttonWidth, buttonHeight), "Teleport"))
             {
-                plugin.ActivePage = ModMenuPlugin.MenuPage.Main;
+                plugin.ActivePage = ModMenuPlugin.MenuPage.TeleportMenu;
+            }
+
+            // Back Button
+            y += buttonHeight + 10f;
+            if (GUI.Button(new Rect(buttonX, y, buttonWidth, buttonHeight), "Back"))
+            {
+                plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
             }
         }
     }
