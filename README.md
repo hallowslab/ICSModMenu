@@ -5,7 +5,7 @@
 ![Mod Status](https://img.shields.io/badge/status-active-brightgreen)
 ![BepInEx](https://img.shields.io/badge/BepInEx-5.x-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20x64-lightgrey)
-
+![Downloads](https://img.shields.io/github/downloads/hallowslab/ICSModMenu/total)
 ---
 
 ## Features
@@ -130,4 +130,5 @@ ICSModMenu/
 ## Support
 
 If you want improvements, more cheats, or UI enhancements, feel free to request them!
+
 
