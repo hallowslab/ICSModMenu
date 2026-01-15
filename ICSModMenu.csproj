@@ -13,6 +13,10 @@
     <DefineConstants>CI</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);GameRefs/**</DefaultItemExcludes>
+  </PropertyGroup>
+
   <ItemGroup Condition="Exists('GamePath.props')">
     <!-- References -->
     <Reference Include="BepInEx">
@@ -53,6 +57,11 @@
 
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>$(ManagedDir)/UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(ManagedDir)/UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

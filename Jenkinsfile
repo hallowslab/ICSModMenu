@@ -10,6 +10,10 @@ pipeline {
         timestamps()
     }
 
+    parameters {
+        booleanParam(name: 'FORCE_ARTIFACTS', defaultValue: false, description: 'Force artifact build even if not a tag')
+    }
+
     stages {
 
         stage('Checkout') {
@@ -38,7 +42,10 @@ pipeline {
 
         stage('Build Debug') {
             when {
-                tag "v*"
+                anyOf {
+                    tag "v*"
+                    expression { return params.FORCE_ARTIFACTS }
+                }
             }
             steps {
                 dotnetPublish project: 'ICSModMenu.csproj', configuration: 'Debug', properties: [CI: 'true', OutputPath: 'build/debug'], sdk: '8.0'
@@ -57,7 +64,10 @@ pipeline {
 
         stage('Build Release') {
             when {
-                tag "v*"
+                anyOf {
+                    tag "v*"
+                    expression { return params.FORCE_ARTIFACTS }
+                }
             }
             steps {
                 dotnetPublish project: 'ICSModMenu.csproj', configuration: 'Release', properties: [CI: 'true', OutputPath: 'build/release'], sdk: '8.0'
@@ -76,7 +86,10 @@ pipeline {
 
         stage('Archive Artifacts') {
             when {
-                tag "v*"
+                anyOf {
+                    tag "v*"
+                    expression { return params.FORCE_ARTIFACTS }
+                }
             }
             steps {
                 archiveArtifacts artifacts: 'ICSModMenu-Debug.zip'

@@ -15,10 +15,7 @@ namespace ICSModMenu.Menus.SubMenus
         private string newY = "";
         private string newZ = "";
 
-        private static readonly float menuWidth = 320f;
-        private static readonly float menuHeight = 440f;
-        private static readonly float menuX = 10f;
-        private static readonly float menuY = 10f;
+
 
         public TeleportMenu(ModMenuPlugin plugin)
         {
@@ -27,25 +24,25 @@ namespace ICSModMenu.Menus.SubMenus
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Teleport Menu");
+            // GUILayout.Box("Teleport Menu"); // Header usually sufficient
 
             // Current player position
             var playerPos = TeleportFeatures.GetCurrentPosition();
-            GUI.Label(new Rect(menuX + 10, menuY + 25, menuWidth - 20, 20), $"Current Position: {playerPos}");
+            GUILayout.Label($"Current Position: {playerPos}");
 
-            float yOffset = 50f;
+            GUILayout.Space(10);
 
             // Input fields for new manual teleport
-            GUI.Label(new Rect(menuX + 10, menuY + yOffset, 100, 20), "X:");
-            newX = GUI.TextField(new Rect(menuX + 40, menuY + yOffset, 60, 20), newX);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("X:", GUILayout.Width(20));
+            newX = GUILayout.TextField(newX, GUILayout.Width(60));
+            GUILayout.Label("Y:", GUILayout.Width(20));
+            newY = GUILayout.TextField(newY, GUILayout.Width(60));
+            GUILayout.Label("Z:", GUILayout.Width(20));
+            newZ = GUILayout.TextField(newZ, GUILayout.Width(60));
+            GUILayout.EndHorizontal();
 
-            GUI.Label(new Rect(menuX + 110, menuY + yOffset, 100, 20), "Y:");
-            newY = GUI.TextField(new Rect(menuX + 140, menuY + yOffset, 60, 20), newY);
-
-            GUI.Label(new Rect(menuX + 210, menuY + yOffset, 100, 20), "Z:");
-            newZ = GUI.TextField(new Rect(menuX + 240, menuY + yOffset, 60, 20), newZ);
-
-            if (GUI.Button(new Rect(menuX + 10, menuY + yOffset + 25, 290, 25), "Teleport to Coordinates"))
+            if (GUILayout.Button("Teleport to Coordinates"))
             {
                 if (float.TryParse(newX, out float x) &&
                     float.TryParse(newY, out float y) &&
@@ -59,13 +56,15 @@ namespace ICSModMenu.Menus.SubMenus
                 }
             }
 
-            yOffset += 60;
+            GUILayout.Space(10);
 
             // Input to save current position
-            GUI.Label(new Rect(menuX + 10, menuY + yOffset, 100, 20), "Save Current Pos as:");
-            newLocationName = GUI.TextField(new Rect(menuX + 120, menuY + yOffset, 180, 20), newLocationName);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Save Name:", GUILayout.Width(80));
+            newLocationName = GUILayout.TextField(newLocationName);
+            GUILayout.EndHorizontal();
 
-            if (GUI.Button(new Rect(menuX + 10, menuY + yOffset + 25, 290, 25), "Save Location"))
+            if (GUILayout.Button("Save Current Location"))
             {
                 if (!string.IsNullOrEmpty(newLocationName))
                 {
@@ -74,34 +73,40 @@ namespace ICSModMenu.Menus.SubMenus
                 }
             }
 
-            yOffset += 60;
+            GUILayout.Space(10);
 
             // Scrollable list of saved locations
-            GUI.Label(new Rect(menuX + 10, menuY + yOffset, 200, 20), "Saved Locations:");
-            Rect scrollViewRect = new Rect(menuX + 10, menuY + yOffset + 20, 300, 200);
-            Rect contentRect = new Rect(0, 0, 280, TeleportLocationManager.Locations.Count * 30);
-
-            scrollPos = GUI.BeginScrollView(scrollViewRect, scrollPos, contentRect);
+            GUILayout.Label("Saved Locations:");
+            
+            // Begin ScrollView
+            scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.Height(200));
 
             for (int i = 0; i < TeleportLocationManager.Locations.Count; i++)
             {
                 var loc = TeleportLocationManager.Locations[i];
-                if (GUI.Button(new Rect(0, i * 30, 200, 25), loc.Name))
+                GUILayout.BeginHorizontal();
+                
+                if (GUILayout.Button(loc.Name))
                 {
                     // Convert SerializableVector3 → Vector3
                     TeleportFeatures.Teleport(loc.Position.ToVector3());
                 }
-                if (GUI.Button(new Rect(210, i * 30, 60, 25), "Delete"))
+                
+                if (GUILayout.Button("X", GUILayout.Width(30)))
                 {
                     TeleportLocationManager.RemoveLocation(i);
                 }
+                
+                GUILayout.EndHorizontal();
             }
 
-            GUI.EndScrollView();
+            GUILayout.EndScrollView();
+
+            GUILayout.FlexibleSpace();
 
             // Back button
-            if (GUI.Button(new Rect(menuX + 10, menuY + menuHeight - 30, 290, 25), "Back"))
-                plugin.ActivePage = ModMenuPlugin.MenuPage.Main;
+            if (GUILayout.Button("Back"))
+                plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats; // Or Main, depending on flow
         }
     }
 }
