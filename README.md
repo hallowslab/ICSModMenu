@@ -13,6 +13,7 @@
 - **In‑game Mod Menu (F11)** – Toggle the mod UI at any time.
 - **In‑game Mod Menu (F10)** – Toggle the DebugOverlay UI.
 - **Modular Structure** – Clean separation of features, patches, menus and utilities.
+- **Draggable and resizable** - Using Unity's GUILayout
 - **Future‑proof Architecture** – Designed to be easily expanded.
 
 ### Cheats
@@ -129,3 +130,4 @@ ICSModMenu/
 ## Support
 
 If you want improvements, more cheats, or UI enhancements, feel free to request them!
+
