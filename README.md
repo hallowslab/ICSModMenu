@@ -28,8 +28,8 @@
 - **Add/Remove Bodyguard** - Adds or removes the Bodyguard.
 - **Unlock all rooms** - Unlocks all room expansions for the cafe.
 - **Teleport to Coordinates** - Teleports to the coordinates specified in the inputs.
-- **Spawner** - Spawns objects in front of the player.
 - **Save Current Pos as** - Saves the current coordinates (displayed in a list) so that they can be easily accessed.
+- **Spawner** - Spawns objects in front of the player.
 
 ### Patches
 
@@ -131,6 +131,7 @@ ICSModMenu/
 ## Support
 
 If you want improvements, more cheats, or UI enhancements, feel free to request them!
+
 
 
 
