@@ -58,7 +58,8 @@ namespace ICSModMenu
             CurrenciesMenu,
             CryptoHoldingsMenu,
             StoreMenu,
-            TeleportMenu
+            TeleportMenu,
+            Spawner
         }
 
         // Public so menus can read/write it
@@ -72,6 +73,7 @@ namespace ICSModMenu
         public CryptoHoldingsMenu cryptoHoldingsMenu;
         public StoreMenu storeMenu;
         public TeleportMenu teleportMenu;
+        public SpawnerMenu spawnerMenu;
 
         //  Forward calls for patches
         public void ToggleThiefPatch()
@@ -117,6 +119,7 @@ namespace ICSModMenu
             cryptoHoldingsMenu = new CryptoHoldingsMenu(this);
             storeMenu = new StoreMenu(this);
             teleportMenu = new TeleportMenu(this);
+            spawnerMenu = new SpawnerMenu(this);
         }
 
         void OnDestroy()
@@ -287,6 +290,9 @@ namespace ICSModMenu
                     break;
                 case MenuPage.TeleportMenu:
                     teleportMenu.Draw();
+                    break;
+                case MenuPage.Spawner:
+                    spawnerMenu.Draw();
                     break;
             }
 

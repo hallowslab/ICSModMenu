@@ -50,6 +50,13 @@ namespace ICSModMenu.Menus.SubMenus
                 plugin.ActivePage = ModMenuPlugin.MenuPage.TeleportMenu;
             }
 
+            // SPAWNER SUBMENU SECTION
+            GUILayout.Space(10);
+            if (GUILayout.Button("Spawner"))
+            {
+                plugin.ActivePage = ModMenuPlugin.MenuPage.Spawner;
+            }
+
             GUILayout.FlexibleSpace();
 
             // Back Button
