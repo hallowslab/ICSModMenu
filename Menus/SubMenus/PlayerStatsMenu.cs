@@ -10,14 +10,7 @@ namespace ICSModMenu.Menus.SubMenus
 
         private float hungerValue = 100f;
 
-        private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 160f;
-        private static readonly float menuX = 10f;
-        private static readonly float menuY = 10f;
-        private static readonly float backButtonY = 120f;
-        private static readonly float buttonWidth = 200f;
-        private static readonly float buttonHeight = 30f;
-        private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
+
 
 
         public PlayerStatsMenu(ModMenuPlugin plugin)
@@ -30,11 +23,11 @@ namespace ICSModMenu.Menus.SubMenus
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Player stats Menu");
             if (plugin.PlayerStats == null)
             {
-                GUI.Label(new Rect(buttonX, 40, buttonWidth, 60), "PlayerStats not available yet");
-                if (GUI.Button(new Rect(buttonX, backButtonY, buttonWidth, buttonHeight), "Back"))
+                GUILayout.Label("PlayerStats not available yet");
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("Back"))
                     plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
                 return;
             }
@@ -42,27 +35,30 @@ namespace ICSModMenu.Menus.SubMenus
             //
             // SET HUNGER SECTION
             //
-            GUI.Label(new Rect(30, 40, 100, 20), "Hunger:");
-
-            hungerValue = GUI.HorizontalSlider(
-                new Rect(80, 45, 120, 20),
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Hunger:", GUILayout.Width(60));
+            
+            hungerValue = GUILayout.HorizontalSlider(
                 hungerValue,
                 0f,
                 100f
             );
+            
+            GUILayout.Label($"{hungerValue:F0}", GUILayout.Width(40));
+            GUILayout.EndHorizontal();
 
-            GUI.Label(new Rect(205, 40, 50, 20), $"{hungerValue:F0}");
-
-            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Set Hunger"))
+            if (GUILayout.Button("Set Hunger"))
             {
                 plugin.PlayerStats.hungry = hungerValue;
                 DebugOverlay.Log($"Hunger set to {hungerValue}");
             }
 
+            GUILayout.FlexibleSpace();
+
             //
             // Back Button
             //
-            if (GUI.Button(new Rect(buttonX, backButtonY, buttonWidth, buttonHeight), "Back"))
+            if (GUILayout.Button("Back"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
             }

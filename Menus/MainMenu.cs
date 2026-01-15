@@ -6,14 +6,7 @@ namespace ICSModMenu.Menus
     {
         private ModMenuPlugin plugin;
 
-        private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 150f;
-        private static readonly float menuX = 10f;
-        private static readonly float menuY = 10f;
-        private static readonly float buttonWidth = 180f;
-        private static readonly float buttonHeight = 30f;
-        // center horizontally
-        private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
+
 
         public MainMenu(ModMenuPlugin plugin)
         {
@@ -22,17 +15,22 @@ namespace ICSModMenu.Menus
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Mod Menu");
+            // Title is now in the Window header
+            // GUILayout.Label("Main Menu");
 
-            if (GUI.Button(new Rect(buttonX, 50, buttonWidth, buttonHeight), "Cheats"))
+            if (GUILayout.Button("Cheats", GUILayout.Height(30)))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
             }
 
-            if (GUI.Button(new Rect(buttonX, 90, buttonWidth, buttonHeight), "Patches"))
+            if (GUILayout.Button("Patches", GUILayout.Height(30)))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Patches;
             }
+            
+
+            
+            GUILayout.FlexibleSpace(); // Push content up if window is large
         }
     }
 }

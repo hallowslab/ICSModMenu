@@ -12,7 +12,17 @@ namespace ICSModMenu.Utils
         {
             // Check if SaveManager exists
             if (saveManager == null)
-                saveManager = Object.FindObjectOfType<SaveManager>();
+            {
+                // Optimization: Don't spam FindObjectOfType every frame if it's missing.
+                // Only try to find it if we are in a scene that might have it, or throttle it.
+                // For now, simple throttling handled effectively by the fact that if it's null, 
+                // we probably aren't loading a save game (unless we just started).
+                // But to be safe against lag spikes:
+                if (Time.frameCount % 60 == 0) // check once every ~60 frames
+                {
+                    saveManager = Object.FindObjectOfType<SaveManager>();
+                }
+            }
 
             // If no save manager, likely in main menu: not loading
             if (saveManager == null) return false;

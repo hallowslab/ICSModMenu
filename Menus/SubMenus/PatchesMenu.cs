@@ -6,13 +6,7 @@ namespace ICSModMenu.Menus.SubMenus
     {
         private ModMenuPlugin plugin;
 
-        private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 200f;
-        private static readonly float menuX = 10f;
-        private static readonly float menuY = 10f;
-        private static readonly float buttonWidth = 200f;
-        private static readonly float buttonHeight = 30f;
-        private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
+
 
 
         public PatchesMenu(ModMenuPlugin plugin)
@@ -22,39 +16,38 @@ namespace ICSModMenu.Menus.SubMenus
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Patches Menu");
-
             //
             // Thief Patch Toggle
             //
-            if (GUI.Button(new Rect(buttonX, 40, buttonWidth, buttonHeight),
-                plugin.thiefPatchEnabled ? "Enable Thiefs" : "Disable Thiefs"))
+            if (GUILayout.Button(plugin.thiefPatchEnabled ? "Enable Thiefs" : "Disable Thiefs"))
             {
                 plugin.ToggleThiefPatch();
             }
 
+            GUILayout.Space(10);
             //
             // Beggar Patch Toggle
             //
-            if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight),
-                plugin.beggarPatchEnabled ? "Enable Beggars" : "Disable Beggars"))
+            if (GUILayout.Button(plugin.beggarPatchEnabled ? "Enable Beggars" : "Disable Beggars"))
             {
                 plugin.ToggleBeggarPatch();
             }
 
+            GUILayout.Space(10);
             //
             // Hunger Patch Toggle
             //
-            if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight),
-                plugin.playerStatsPatchEnabled ? "Enable Hunger" : "Disable Hunger"))
+            if (GUILayout.Button(plugin.playerStatsPatchEnabled ? "Enable Hunger" : "Disable Hunger"))
             {
                 plugin.TogglePlayerStatsPatch();
             }
 
+            GUILayout.FlexibleSpace();
+
             //
             // Back Button
             //
-            if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Back"))
+            if (GUILayout.Button("Back"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Main;
             }

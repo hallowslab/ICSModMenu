@@ -10,13 +10,7 @@ namespace ICSModMenu.Menus.SubMenus
         private ModMenuPlugin plugin;
 
 
-        private static readonly float menuWidth = 240f;
-        private static readonly float menuHeight = 200f;
-        private static readonly float menuX = 10f;
-        private static readonly float menuY = 10f;
-        private static readonly float buttonWidth = 200f;
-        private static readonly float buttonHeight = 30f;
-        private readonly float buttonX = menuX + (menuWidth - buttonWidth) / 2f;
+
 
 
         public StoreMenu(ModMenuPlugin plugin)
@@ -26,14 +20,12 @@ namespace ICSModMenu.Menus.SubMenus
 
         public void Draw()
         {
-            GUI.Box(new Rect(menuX, menuY, menuWidth, menuHeight), "Store Menu");
-
             //
             // CLEAR TRASH SECTION
             //
             if (plugin.TrashSystem != null)
             {
-                if (GUI.Button(new Rect(buttonX, 40, buttonWidth, buttonHeight), "Clear All Trash"))
+                if (GUILayout.Button("Clear All Trash"))
                 {
                     TrashFeatures.ClearAllTrash(plugin.TrashSystem);
                     DebugOverlay.Log("Cleared trash!");
@@ -41,15 +33,17 @@ namespace ICSModMenu.Menus.SubMenus
             }
             else
             {
-                GUI.Label(new Rect(20, 40, 200, 20), "TrashSystem not available yet");
+                GUILayout.Label("TrashSystem not available yet");
             }
+
+            GUILayout.Space(10);
 
             // 
             // SEND CLIENT SECTION
             // 
             if (plugin.CivilManager != null)
             {
-                if (GUI.Button(new Rect(buttonX, 80, buttonWidth, buttonHeight), "Send Client"))
+                if (GUILayout.Button("Send Client"))
                 {
                     CivilManagerFeatures.SendNewCustomer(plugin.CivilManager);
                     DebugOverlay.Log("Sent customer");
@@ -57,25 +51,29 @@ namespace ICSModMenu.Menus.SubMenus
             }
             else
             {
-                GUI.Label(new Rect(20, 80, 200, 20), "CivilManager not available yet");
+                GUILayout.Label("CivilManager not available yet");
             }
+
+            GUILayout.Space(10);
 
             if (plugin.RoomManager != null)
             {
-                if (GUI.Button(new Rect(buttonX, 120, buttonWidth, buttonHeight), "Unlock All Rooms"))
+                if (GUILayout.Button("Unlock All Rooms"))
                 {
                     ICStoreFeatures.UnlockAllRooms(plugin.RoomManager);
                 }
             }
             else
             {
-                GUI.Label(new Rect(20, 120, 200, 20), "Open icstore page in-game first");
+                GUILayout.Label("Open icstore page in-game first");
             }
+
+            GUILayout.FlexibleSpace();
 
             //
             // Back Button
             //
-            if (GUI.Button(new Rect(buttonX, 160, buttonWidth, buttonHeight), "Back"))
+            if (GUILayout.Button("Back"))
             {
                 plugin.ActivePage = ModMenuPlugin.MenuPage.Cheats;
             }
