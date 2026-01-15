@@ -11,7 +11,7 @@ using ICSModMenu.Models;
 
 namespace ICSModMenu
 {
-    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.9.0")]
+    [BepInPlugin("com.hallowslab.ICSModMenu", "Internet Cafe Simulator Mod Menu", "0.9.2")]
     public class ModMenuPlugin : BaseUnityPlugin
     {
         // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/3_logging.html
@@ -250,7 +250,7 @@ namespace ICSModMenu
             
             // Drag indicator in title
             // We use a different title variable or just format it here
-            string titleBuffer = "  ::  Mod Menu v0.8.0  ::  "; // ASCII grip hint
+            string titleBuffer = "  ::  Mod Menu v0.9.2  ::  "; // ASCII grip hint
 
             windowRect = GUILayout.Window(1001, windowRect, DoWindow, titleBuffer);
         }
