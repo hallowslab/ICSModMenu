@@ -19,7 +19,7 @@ namespace ICSModMenu
         // - Create an internal static ManualLogSource field inside the plugin class
         // - In plugin's startup code, assign plugin's logger to the field
         // - In your other classes, use the static logger field from your plugin class
-        internal static new ManualLogSource Log;
+        internal static ManualLogSource Log;
         // Tracks if the menu is open or closed
         private bool menuVisible = false;
         // In game class references
@@ -96,11 +96,8 @@ namespace ICSModMenu
             );
         }
 
-        #if CI
-        private new void Awake()
-        #else
+        
         private void Awake()
-        #endif
         {
             // Required to allow opening the overlay before the menu
             DebugOverlay.Log("");
@@ -135,11 +132,11 @@ namespace ICSModMenu
             }
         }
 
-        #if CI
-        private new void Update()
-        #else
+        // Performance optimization
+        private float nextCheckTime = 0f;
+        private const float CheckInterval = 1.0f;
+
         private void Update()
-        #endif
         {
             // TODO: This is not working
             if (LoadingHelper.IsLoading())
@@ -147,12 +144,18 @@ namespace ICSModMenu
                 DebugOverlay.Log("Functionality disabled while loading");
                 return; // disable hotkeys while loading
             }
-            Ensure(ref playerStats);
-            Ensure(ref civilManager);
-            Ensure(ref trashSystem);
-            Ensure(ref workersPanel);
-            Ensure(ref icstore);
-            Ensure(ref exchange);
+            // Throttle the heavy FindObjectOfType calls to once per second
+            if (Time.time >= nextCheckTime)
+            {
+                nextCheckTime = Time.time + CheckInterval;
+                
+                Ensure(ref playerStats);
+                Ensure(ref civilManager);
+                Ensure(ref trashSystem);
+                Ensure(ref workersPanel);
+                Ensure(ref icstore);
+                Ensure(ref exchange);
+            }
             if (icstore != null && RoomManager == null)
             {
                 RoomManager = new RoomManager(icstore);
@@ -173,13 +176,88 @@ namespace ICSModMenu
             }
         }
 
-        #if CI
-        private new void OnGUI()
-        #else
+        // Window rect for the draggable window
+        private Rect windowRect = new Rect(20, 20, 300, 400);
+        
+        // Styling
+        private GUIStyle windowStyle;
+        private GUIStyle boxStyle;
+        private GUIStyle buttonStyle;
+        private GUIStyle labelStyle;
+        private GUIStyle textFieldStyle;
+        private Texture2D darkBackground;
+        private bool stylesInitialized = false;
+
+        private void InitStyles()
+        {
+            if (stylesInitialized) return;
+
+            // Create a 1x1 dark texture
+            darkBackground = new Texture2D(1, 1);
+            darkBackground.SetPixel(0, 0, new Color(0.1f, 0.1f, 0.1f, 1f)); // Dark Gray Opaque
+            darkBackground.Apply();
+
+            // Window Style
+            windowStyle = new GUIStyle(GUI.skin.window);
+            windowStyle.normal.background = darkBackground;
+            windowStyle.onNormal.background = darkBackground;
+            windowStyle.normal.textColor = Color.white;
+            windowStyle.onNormal.textColor = Color.white;
+            windowStyle.active.background = darkBackground;
+            windowStyle.focused.background = darkBackground;
+            windowStyle.hover.background = darkBackground;
+            
+            // Make title bar bigger
+            windowStyle.border.top = 40; 
+            windowStyle.padding.top = 45; // Push content down
+            windowStyle.fontSize = 20; // Bigger title text
+            windowStyle.alignment = UnityEngine.TextAnchor.UpperCenter;
+            windowStyle.fontStyle = UnityEngine.FontStyle.Bold;
+
+            // Box Style
+            boxStyle = new GUIStyle(GUI.skin.box);
+            boxStyle.normal.textColor = Color.white;
+            
+            // Button Style
+            buttonStyle = new GUIStyle(GUI.skin.button);
+            buttonStyle.normal.textColor = Color.white;
+            
+            // Label Style
+            labelStyle = new GUIStyle(GUI.skin.label);
+            labelStyle.normal.textColor = Color.white;
+
+            // TextField Style
+            textFieldStyle = new GUIStyle(GUI.skin.textField);
+            textFieldStyle.normal.textColor = Color.white;
+
+            stylesInitialized = true;
+        }
+
         private void OnGUI()
-        #endif
         {
             if (!menuVisible) return;
+
+            if (!stylesInitialized) InitStyles();
+
+            GUI.skin.window = windowStyle;
+            GUI.skin.box = boxStyle;
+            GUI.skin.button = buttonStyle;
+            GUI.skin.label = labelStyle;
+            GUI.skin.textField = textFieldStyle;
+            
+            // Drag indicator in title
+            // We use a different title variable or just format it here
+            string titleBuffer = "  ::  Mod Menu v0.8.0  ::  "; // ASCII grip hint
+
+            windowRect = GUILayout.Window(1001, windowRect, DoWindow, titleBuffer);
+        }
+
+        private void DoWindow(int windowID)
+        {
+            GUILayout.BeginVertical();
+            
+            // Add space for the large title bar
+            GUILayout.Space(10); 
 
             switch (ActivePage)
             {
@@ -211,6 +289,47 @@ namespace ICSModMenu
                     teleportMenu.Draw();
                     break;
             }
+
+            GUILayout.EndVertical();
+
+            // Draw Resize Handle
+            ResizeWindow();
+
+            // Make the window draggable
+            // Drag area covers the enlarged title bar
+            GUI.DragWindow(new Rect(0, 0, 10000, 40)); 
         }
+
+        private void ResizeWindow()
+        {
+            Vector2 mouse = Event.current.mousePosition;
+            Rect resizeRect = new Rect(windowRect.width - 20, windowRect.height - 20, 20, 20);
+             
+            // Draw a visual indicator
+            GUI.Box(resizeRect, "↘");
+
+            if (Event.current.type == EventType.MouseDown && resizeRect.Contains(mouse))
+            {
+                isResizing = true;
+                resizeStart = mouse;
+                startSize = new Vector2(windowRect.width, windowRect.height);
+                Event.current.Use(); // Consume event
+            }
+            if (Event.current.type == EventType.MouseUp)
+            {
+                isResizing = false;
+            }
+            if (Event.current.type == EventType.MouseDrag && isResizing)
+            {
+                Vector2 delta = mouse - resizeStart;
+                windowRect.width = Mathf.Max(200, startSize.x + delta.x);
+                windowRect.height = Mathf.Max(200, startSize.y + delta.y);
+                Event.current.Use(); // Consume event to prevent drag window
+            }
+        }
+
+        private bool isResizing = false;
+        private Vector2 resizeStart;
+        private Vector2 startSize;
     }
 }
